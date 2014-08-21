@@ -1,0 +1,188 @@
+﻿using Common;
+using Maunite.DBUtility;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace CSharp数据库代码生成工具
+{
+    public partial class Tables : Form
+    {
+        public Tables()
+        {
+            InitializeComponent();
+        }
+        public string StrDatabase,StrTableName="";
+        private void Tables_Load(object sender, EventArgs e)
+        {
+            Hide();
+            listViewTables.GridLines = true;//显示各个记录的分隔线 
+            listViewTables.FullRowSelect = true;//要选择就是一行 
+            listViewTables.View = View.Details;//定义列表显示的方式 
+            listViewTables.Scrollable = true;//需要时候显示滚动条 
+            listViewTables.MultiSelect = false; // 不可以多行选择 
+            listViewTables.HeaderStyle = ColumnHeaderStyle.Clickable;
+            StrDatabase = ((form11)this.Owner).comDataBaseText;
+            LoadData();
+
+        }
+
+        //***********************得到数据集并绑定到listViewTables控件************/
+        //清空listViewTables
+        //设置表头。
+        //执行数据库查询操作，得到表中所要显示的数据
+        //数据按行绑定到eListView
+        /*********************************************************************/
+        private void LoadData()
+        {
+            this.listViewTables.Clear();
+
+            // 针对数据库的字段名称，建立与之适应显示表头 
+            listViewTables.Columns.Add("序号", 50, HorizontalAlignment.Left);
+            listViewTables.Columns.Add("表名", 200, HorizontalAlignment.Left);
+            listViewTables.Columns.Add("说明", 150, HorizontalAlignment.Left);
+            listViewTables.Visible = true;
+
+            // 针对数据库的字段名称，建立与之适应显示表头  避免没选择表时左侧为空
+            listViewColumns.Columns.Add("序号", 50, HorizontalAlignment.Left);
+            listViewColumns.Columns.Add("字段名", 120, HorizontalAlignment.Left);
+            listViewColumns.Columns.Add("字段类型", 80, HorizontalAlignment.Left);
+            listViewColumns.Columns.Add("字段说明", 150, HorizontalAlignment.Left);
+            listViewColumns.Visible = true;
+
+            var sql = " select top 1000" +
+                               " a.name AS 表名 ," +
+                               " isnull(g.[value],'-') AS 说明" +
+                               " from" +
+                               " sys.tables a left join sys.extended_properties g " +
+                               "on (a.object_id = g.major_id AND g.minor_id = 0)";
+
+            ListViewHelper.DisplayDataSet(listViewTables, GetDataSet(sql), true);
+            //int i = 0;
+            //if (ds != null && ds.Tables[0].Rows.Count > 0)
+            //{
+            //    foreach (DataRow row in ds.Tables[0].Rows)
+            //    {
+            //        i++;
+            //        var item = new ListViewItem();
+            //        item.SubItems.Clear();
+            //        item.SubItems[0].Text = i.ToString();
+            //        item.SubItems.Add(row["表名"].ToString());
+            //        item.SubItems.Add(row["说明"].ToString());
+            //        listViewTables.Items.Add(item);
+            //    }
+
+
+            //}
+
+        }
+        /// <summary>
+        /// 获取数据
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public DataSet GetDataSet(string sql)
+        {
+            try
+            {
+
+                DataSet ds = DbHelperSQL.Query("use [" + StrDatabase + "];" + sql);
+                Show();
+                return ds;
+            }
+            catch (Exception ex)
+            {
+                this.Close();
+                MessageBox.Show(ex.Message);
+            }
+            return null;
+        }
+
+        private void listViewTables_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listViewTables.SelectedItems.Count > 0)
+            {
+                //MessageBox.Show(listViewTables.SelectedItems[0].SubItems[1].Text+@"-"+listViewTables.SelectedItems[0].SubItems[2].Text);
+                StrTableName = listViewTables.SelectedItems[0].SubItems[1].Text;
+                LoadTableColumns(StrTableName);
+            }
+        }
+        /// <summary>
+        /// 绑定表字段
+        /// </summary>
+        private void LoadTableColumns(string tableName)
+        {
+            this.listViewColumns.Clear();
+
+            // 针对数据库的字段名称，建立与之适应显示表头 
+            listViewColumns.Columns.Add("序号", 50, HorizontalAlignment.Left);
+            listViewColumns.Columns.Add("字段名", 120, HorizontalAlignment.Left);
+            listViewColumns.Columns.Add("字段类型", 80, HorizontalAlignment.Left);
+            listViewColumns.Columns.Add("字段说明", 150, HorizontalAlignment.Left);
+            listViewColumns.Visible = true;
+           
+
+            var sql = new StringBuilder();
+
+            sql.AppendLine("select c.name as columnName,t.name as columnType,p.value as columnDescription   from  sysobjects o left join syscolumns c  on o.id=c.id");
+            sql.AppendLine(" left join sys.extended_properties p on p.major_id=c.id and p.minor_id=c.colid and p.name='MS_Description' left join systypes t on c.xusertype=t.xusertype");
+            sql.AppendLine("where o.type='u' ");
+            sql.AppendLine("and o.name='" + tableName + "'");
+
+            ListViewHelper.DisplayDataSet(listViewColumns, GetDataSet(sql.ToString()), true);
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedIndex == 1)
+            {
+                //MessageBox.Show(StrTableName);
+                richTemplate.Text = "txt字段名.Text = model.字段名;//字段说明";
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (StrTableName=="")
+            {
+                MessageBox.Show("请选择要操作的表");
+                return;
+            }
+            var sql = new StringBuilder();
+
+            sql.AppendLine("select c.name as columnName,t.name as columnType,p.value as columnDescription   from  sysobjects o left join syscolumns c  on o.id=c.id");
+            sql.AppendLine(" left join sys.extended_properties p on p.major_id=c.id and p.minor_id=c.colid and p.name='MS_Description' left join systypes t on c.xusertype=t.xusertype");
+            sql.AppendLine("where o.type='u' ");
+            sql.AppendLine("and o.name='" + StrTableName + "'");
+
+            var ds = GetDataSet(sql.ToString());
+            if (ds!=null&&ds.Tables[0].Rows.Count>0)
+            {
+                var result = new StringBuilder();
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    var temp = richTemplate.Text;
+                    result.AppendLine(temp.Replace("字段名", row["columnName"].ToString()).Replace("字段说明", row["columnDescription"].ToString()));
+                }
+                richResult.Text = result.ToString();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetDataObject(button2.Text); //则把数据置于剪切板中
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetDataObject(button3.Text); //则把数据置于剪切板中
+        }
+
+
+    }
+}
