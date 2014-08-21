@@ -32,13 +32,14 @@
             this.listViewTables = new System.Windows.Forms.ListView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.listViewColumns = new System.Windows.Forms.ListView();
-            this.richResult = new System.Windows.Forms.RichTextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.richTemplate = new System.Windows.Forms.RichTextBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.richTemplate = new System.Windows.Forms.RichTextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.richResult = new System.Windows.Forms.RichTextBox();
+            this.listViewTemplate = new System.Windows.Forms.ListView();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -78,8 +79,21 @@
             this.tabPage1.Text = "选择表";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // listViewColumns
+            // 
+            this.listViewColumns.FullRowSelect = true;
+            this.listViewColumns.GridLines = true;
+            this.listViewColumns.Location = new System.Drawing.Point(480, 6);
+            this.listViewColumns.Name = "listViewColumns";
+            this.listViewColumns.Size = new System.Drawing.Size(433, 504);
+            this.listViewColumns.TabIndex = 0;
+            this.listViewColumns.UseCompatibleStateImageBehavior = false;
+            this.listViewColumns.View = System.Windows.Forms.View.Details;
+            this.listViewColumns.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listViewColumns_KeyDown);
+            // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.listViewTemplate);
             this.tabPage2.Controls.Add(this.button3);
             this.tabPage2.Controls.Add(this.button2);
             this.tabPage2.Controls.Add(this.richTemplate);
@@ -93,42 +107,15 @@
             this.tabPage2.Text = "自定义";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // listViewColumns
+            // button3
             // 
-            this.listViewColumns.GridLines = true;
-            this.listViewColumns.Location = new System.Drawing.Point(480, 6);
-            this.listViewColumns.Name = "listViewColumns";
-            this.listViewColumns.Size = new System.Drawing.Size(433, 504);
-            this.listViewColumns.TabIndex = 0;
-            this.listViewColumns.UseCompatibleStateImageBehavior = false;
-            this.listViewColumns.View = System.Windows.Forms.View.Details;
-            this.listViewColumns.SelectedIndexChanged += new System.EventHandler(this.listViewTables_SelectedIndexChanged);
-            // 
-            // richResult
-            // 
-            this.richResult.Location = new System.Drawing.Point(6, 6);
-            this.richResult.Name = "richResult";
-            this.richResult.Size = new System.Drawing.Size(907, 301);
-            this.richResult.TabIndex = 0;
-            this.richResult.Text = "";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(7, 313);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(906, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "生成";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // richTemplate
-            // 
-            this.richTemplate.Location = new System.Drawing.Point(7, 370);
-            this.richTemplate.Name = "richTemplate";
-            this.richTemplate.Size = new System.Drawing.Size(906, 140);
-            this.richTemplate.TabIndex = 2;
-            this.richTemplate.Text = "";
+            this.button3.Location = new System.Drawing.Point(493, 342);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.TabIndex = 4;
+            this.button3.Text = "字段说明";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button2
             // 
@@ -140,15 +127,42 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button3
+            // richTemplate
             // 
-            this.button3.Location = new System.Drawing.Point(493, 342);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 4;
-            this.button3.Text = "字段说明";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.richTemplate.Location = new System.Drawing.Point(194, 370);
+            this.richTemplate.Name = "richTemplate";
+            this.richTemplate.Size = new System.Drawing.Size(719, 140);
+            this.richTemplate.TabIndex = 2;
+            this.richTemplate.Text = "";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(7, 313);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(906, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "生成";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // richResult
+            // 
+            this.richResult.Location = new System.Drawing.Point(6, 6);
+            this.richResult.Name = "richResult";
+            this.richResult.Size = new System.Drawing.Size(907, 301);
+            this.richResult.TabIndex = 0;
+            this.richResult.Text = "";
+            // 
+            // listViewTemplate
+            // 
+            this.listViewTemplate.GridLines = true;
+            this.listViewTemplate.Location = new System.Drawing.Point(6, 370);
+            this.listViewTemplate.Name = "listViewTemplate";
+            this.listViewTemplate.Size = new System.Drawing.Size(182, 140);
+            this.listViewTemplate.TabIndex = 5;
+            this.listViewTemplate.UseCompatibleStateImageBehavior = false;
+            this.listViewTemplate.View = System.Windows.Forms.View.Details;
+            this.listViewTemplate.SelectedIndexChanged += new System.EventHandler(this.listViewTemplate_SelectedIndexChanged);
             // 
             // Tables
             // 
@@ -163,6 +177,7 @@
             this.Name = "Tables";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "代码生成器";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Tables_FormClosing);
             this.Load += new System.EventHandler(this.Tables_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -183,5 +198,6 @@
         private System.Windows.Forms.RichTextBox richTemplate;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ListView listViewTemplate;
     }
 }

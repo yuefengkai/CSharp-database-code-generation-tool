@@ -36,10 +36,12 @@ namespace CSharp数据库代码生成工具
                     
                     DbHelperSQL.connectionString = _strConn;
                     BindDatabase();
+                    btnConnection.Enabled = false;
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
+                    btnConnection.Enabled = true;
                 }
                 
             }
@@ -77,7 +79,8 @@ namespace CSharp数据库代码生成工具
         {
             Tables table = new Tables();
             table.Owner = this;
-            table.ShowDialog();
+            table.Show();
+            Hide();
         }
     }
 }

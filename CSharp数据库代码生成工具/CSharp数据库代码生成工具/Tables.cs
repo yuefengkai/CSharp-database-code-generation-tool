@@ -18,6 +18,7 @@ namespace CSharp数据库代码生成工具
             InitializeComponent();
         }
         public string StrDatabase,StrTableName="";
+        public Dictionary<string, string> dic = new Dictionary<string, string>();
         private void Tables_Load(object sender, EventArgs e)
         {
             Hide();
@@ -142,7 +143,38 @@ namespace CSharp数据库代码生成工具
             if (tabControl1.SelectedIndex == 1)
             {
                 //MessageBox.Show(StrTableName);
-                richTemplate.Text = "txt字段名.Text = model.字段名;//字段说明";
+                richTemplate.Text = "model.字段名 = txt字段名.Text;//字段说明";
+
+                listViewTemplate.GridLines = true;//显示各个记录的分隔线 
+                listViewTemplate.FullRowSelect = true;//要选择就是一行 
+                listViewTemplate.View = View.Details;//定义列表显示的方式 
+                listViewTemplate.Scrollable = true;//需要时候显示滚动条 
+                listViewTemplate.MultiSelect = false; // 不可以多行选择 
+                listViewTemplate.HeaderStyle = ColumnHeaderStyle.Clickable;
+
+                // 针对数据库的字段名称，建立与之适应显示表头
+                listViewTemplate.Clear();
+                listViewTemplate.Columns.Add("序号", 50, HorizontalAlignment.Left);
+                listViewTemplate.Columns.Add("模板", 100, HorizontalAlignment.Left);
+                listViewTemplate.Visible = true;
+                if (dic.Count==0)
+                {
+                    dic.Add("Add", "model.字段名 = txt字段名.Text;//字段说明");
+                    dic.Add("Edit", "txt字段名.Text= model.字段名;//字段说明");
+                    dic.Add("asp:TextBox", "<asp:TextBox id=\"txt字段名\" runat=\"server\" />");
+                    dic.Add("HtmlInput", "<input type=\"text\" id=\"txt字段名\" name=\"txt字段名\" />");
+                    dic.Add("EasyUIColumns", "{ field:'字段名',title:'字段说明',width:100 },"); 
+                }
+                int i = 0;
+                foreach (var dicItem in dic)
+                {
+                    i++;
+                    var item = new ListViewItem();
+                    item.SubItems.Clear();
+                    item.SubItems[0].Text = i.ToString();
+                    item.SubItems.Add(dicItem.Key);
+                    listViewTemplate.Items.Add(item);
+                }
             }
         }
 
@@ -181,6 +213,43 @@ namespace CSharp数据库代码生成工具
         private void button3_Click(object sender, EventArgs e)
         {
             Clipboard.SetDataObject(button3.Text); //则把数据置于剪切板中
+        }
+
+        private void listViewTemplate_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listViewTemplate.SelectedItems.Count > 0)
+            {
+                //MessageBox.Show(listViewTemplate.SelectedItems[0].SubItems[1].Text);
+                richTemplate.Text = dic[listViewTemplate.SelectedItems[0].SubItems[1].Text];
+
+            }
+        }
+
+        private void listViewColumns_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.C)
+            {
+                if (listViewColumns.SelectedItems.Count > 0)
+                {
+                    //将复制的内容放入剪切板中
+                    if (listViewColumns.SelectedItems[0].Text != "")
+                        Clipboard.SetDataObject(listViewColumns.SelectedItems[0].SubItems[1].Text);
+                }
+            }
+        }
+
+        private void Tables_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            DialogResult result = MessageBox.Show("你确定要关闭吗！", "提示信息", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            if (result == DialogResult.OK)
+            {
+                e.Cancel = false;  //点击OK 
+                System.Environment.Exit(0);
+            }
+            else
+            {
+                e.Cancel = true;
+            }    
         }
 
 
