@@ -2,7 +2,6 @@
 
 ######	快速代码生成减少代码时间
 
-[点击这里我你可以链接到我的博客](http://www.gaozengzhi.cn)<br />
 [工具截图cnblog](http://www.cnblogs.com/yuefengkai/p/3927101.html)<br />
 
 ## 概述
@@ -18,4 +17,6 @@
 
 
 #### 3. 生成开发中没有技术含量但费时间的累代码,可手动编辑模板。
+
+[点击这里我你可以链接到我的博客](http://www.gaozengzhi.cn)<br />
 
