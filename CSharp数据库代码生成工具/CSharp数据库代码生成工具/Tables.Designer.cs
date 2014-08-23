@@ -34,12 +34,12 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.listViewColumns = new System.Windows.Forms.ListView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.listViewTemplate = new System.Windows.Forms.ListView();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.richTemplate = new System.Windows.Forms.RichTextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.richResult = new System.Windows.Forms.RichTextBox();
-            this.txtTemplate = new System.Windows.Forms.TextBox();
+            this.listViewTemplate = new System.Windows.Forms.ListView();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -93,10 +93,10 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.txtTemplate);
             this.tabPage2.Controls.Add(this.listViewTemplate);
             this.tabPage2.Controls.Add(this.button3);
             this.tabPage2.Controls.Add(this.button2);
+            this.tabPage2.Controls.Add(this.richTemplate);
             this.tabPage2.Controls.Add(this.button1);
             this.tabPage2.Controls.Add(this.richResult);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
@@ -106,17 +106,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "自定义";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // listViewTemplate
-            // 
-            this.listViewTemplate.GridLines = true;
-            this.listViewTemplate.Location = new System.Drawing.Point(6, 370);
-            this.listViewTemplate.Name = "listViewTemplate";
-            this.listViewTemplate.Size = new System.Drawing.Size(182, 140);
-            this.listViewTemplate.TabIndex = 5;
-            this.listViewTemplate.UseCompatibleStateImageBehavior = false;
-            this.listViewTemplate.View = System.Windows.Forms.View.Details;
-            this.listViewTemplate.SelectedIndexChanged += new System.EventHandler(this.listViewTemplate_SelectedIndexChanged);
             // 
             // button3
             // 
@@ -138,6 +127,14 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // richTemplate
+            // 
+            this.richTemplate.Location = new System.Drawing.Point(194, 370);
+            this.richTemplate.Name = "richTemplate";
+            this.richTemplate.Size = new System.Drawing.Size(719, 140);
+            this.richTemplate.TabIndex = 2;
+            this.richTemplate.Text = "";
+            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(7, 313);
@@ -156,13 +153,16 @@
             this.richResult.TabIndex = 0;
             this.richResult.Text = "";
             // 
-            // txtTemplate
+            // listViewTemplate
             // 
-            this.txtTemplate.Location = new System.Drawing.Point(194, 370);
-            this.txtTemplate.Multiline = true;
-            this.txtTemplate.Name = "txtTemplate";
-            this.txtTemplate.Size = new System.Drawing.Size(719, 140);
-            this.txtTemplate.TabIndex = 6;
+            this.listViewTemplate.GridLines = true;
+            this.listViewTemplate.Location = new System.Drawing.Point(6, 370);
+            this.listViewTemplate.Name = "listViewTemplate";
+            this.listViewTemplate.Size = new System.Drawing.Size(182, 140);
+            this.listViewTemplate.TabIndex = 5;
+            this.listViewTemplate.UseCompatibleStateImageBehavior = false;
+            this.listViewTemplate.View = System.Windows.Forms.View.Details;
+            this.listViewTemplate.SelectedIndexChanged += new System.EventHandler(this.listViewTemplate_SelectedIndexChanged);
             // 
             // Tables
             // 
@@ -182,7 +182,6 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -196,9 +195,9 @@
         private System.Windows.Forms.ListView listViewColumns;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.RichTextBox richResult;
+        private System.Windows.Forms.RichTextBox richTemplate;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ListView listViewTemplate;
-        private System.Windows.Forms.TextBox txtTemplate;
     }
 }
