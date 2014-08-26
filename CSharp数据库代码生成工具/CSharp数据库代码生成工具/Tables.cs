@@ -61,7 +61,7 @@ namespace CSharp数据库代码生成工具
                                " isnull(g.[value],'-') AS 说明" +
                                " from" +
                                " sys.tables a left join sys.extended_properties g " +
-                               "on (a.object_id = g.major_id AND g.minor_id = 0)";
+                               "on (a.object_id = g.major_id AND g.minor_id = 0) order by 表名 asc";
 
             ListViewHelper.DisplayDataSet(listViewTables, GetDataSet(sql), true);
             //int i = 0;
@@ -110,7 +110,23 @@ namespace CSharp数据库代码生成工具
             {
                 //MessageBox.Show(listViewTables.SelectedItems[0].SubItems[1].Text+@"-"+listViewTables.SelectedItems[0].SubItems[2].Text);
                 StrTableName = listViewTables.SelectedItems[0].SubItems[1].Text;
+                
                 LoadTableColumns(StrTableName);
+
+                for (int i = 0; i < listViewTables.Items.Count; i++)
+                {
+                    if (listViewTables.Items[i].Selected == true)
+                    {
+                        listViewTables.SelectedItems[0].BackColor = Color.DodgerBlue;
+                        listViewTables.SelectedItems[0].ForeColor = Color.White;
+                    }
+                    else
+                    {
+                        listViewTables.Items[i].BackColor = Color.White;
+                        listViewTables.Items[i].ForeColor = Color.Black;
+                    }
+
+                }
             }
         }
         /// <summary>
@@ -175,6 +191,8 @@ namespace CSharp数据库代码生成工具
                     item.SubItems.Add(dicItem.Key);
                     listViewTemplate.Items.Add(item);
                 }
+
+                labSelectTableName.Text = StrTableName;
             }
         }
 
@@ -233,7 +251,7 @@ namespace CSharp数据库代码生成工具
                 {
                     //将复制的内容放入剪切板中
                     if (listViewColumns.SelectedItems[0].Text != "")
-                        Clipboard.SetDataObject(listViewColumns.SelectedItems[0].SubItems[1].Text);
+                        Clipboard.SetDataObject(listViewColumns.SelectedItems[0].SubItems[1].Text +" "+ listViewColumns.SelectedItems[0].SubItems[3].Text);
                 }
             }
         }

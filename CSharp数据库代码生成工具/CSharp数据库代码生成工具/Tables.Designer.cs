@@ -34,12 +34,15 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.listViewColumns = new System.Windows.Forms.ListView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.listViewTemplate = new System.Windows.Forms.ListView();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.richTemplate = new System.Windows.Forms.RichTextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.richResult = new System.Windows.Forms.RichTextBox();
-            this.listViewTemplate = new System.Windows.Forms.ListView();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.labSelectTableName = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -93,6 +96,9 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.labSelectTableName);
+            this.tabPage2.Controls.Add(this.label2);
+            this.tabPage2.Controls.Add(this.label1);
             this.tabPage2.Controls.Add(this.listViewTemplate);
             this.tabPage2.Controls.Add(this.button3);
             this.tabPage2.Controls.Add(this.button2);
@@ -107,9 +113,20 @@
             this.tabPage2.Text = "自定义";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // listViewTemplate
+            // 
+            this.listViewTemplate.GridLines = true;
+            this.listViewTemplate.Location = new System.Drawing.Point(6, 370);
+            this.listViewTemplate.Name = "listViewTemplate";
+            this.listViewTemplate.Size = new System.Drawing.Size(182, 140);
+            this.listViewTemplate.TabIndex = 5;
+            this.listViewTemplate.UseCompatibleStateImageBehavior = false;
+            this.listViewTemplate.View = System.Windows.Forms.View.Details;
+            this.listViewTemplate.SelectedIndexChanged += new System.EventHandler(this.listViewTemplate_SelectedIndexChanged);
+            // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(493, 342);
+            this.button3.Location = new System.Drawing.Point(838, 341);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 4;
@@ -119,7 +136,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(277, 342);
+            this.button2.Location = new System.Drawing.Point(757, 341);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 3;
@@ -153,16 +170,30 @@
             this.richResult.TabIndex = 0;
             this.richResult.Text = "";
             // 
-            // listViewTemplate
+            // label1
             // 
-            this.listViewTemplate.GridLines = true;
-            this.listViewTemplate.Location = new System.Drawing.Point(6, 370);
-            this.listViewTemplate.Name = "listViewTemplate";
-            this.listViewTemplate.Size = new System.Drawing.Size(182, 140);
-            this.listViewTemplate.TabIndex = 5;
-            this.listViewTemplate.UseCompatibleStateImageBehavior = false;
-            this.listViewTemplate.View = System.Windows.Forms.View.Details;
-            this.listViewTemplate.SelectedIndexChanged += new System.EventHandler(this.listViewTemplate_SelectedIndexChanged);
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 346);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(77, 12);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "当前选择表：";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(89, 346);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(0, 12);
+            this.label2.TabIndex = 6;
+            // 
+            // labSelectTableName
+            // 
+            this.labSelectTableName.AutoSize = true;
+            this.labSelectTableName.Location = new System.Drawing.Point(78, 346);
+            this.labSelectTableName.Name = "labSelectTableName";
+            this.labSelectTableName.Size = new System.Drawing.Size(0, 12);
+            this.labSelectTableName.TabIndex = 6;
             // 
             // Tables
             // 
@@ -182,6 +213,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -199,5 +231,8 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ListView listViewTemplate;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labSelectTableName;
+        private System.Windows.Forms.Label label2;
     }
 }
