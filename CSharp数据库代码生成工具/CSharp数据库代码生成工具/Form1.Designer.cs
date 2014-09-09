@@ -64,6 +64,7 @@
             // 
             // btnConfirm
             // 
+            this.btnConfirm.Enabled = false;
             this.btnConfirm.Location = new System.Drawing.Point(292, 197);
             this.btnConfirm.Name = "btnConfirm";
             this.btnConfirm.Size = new System.Drawing.Size(75, 23);

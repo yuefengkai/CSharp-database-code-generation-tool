@@ -270,6 +270,14 @@ namespace CSharp数据库代码生成工具
             }    
         }
 
+        private void listViewColumns_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listViewColumns.SelectedItems.Count > 0)
+            {
+                Clipboard.SetDataObject(listViewColumns.SelectedItems[0].SubItems[1].Text);
+            }
+        }
+
 
     }
 }

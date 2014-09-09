@@ -37,11 +37,13 @@ namespace CSharp数据库代码生成工具
                     DbHelperSQL.connectionString = _strConn;
                     BindDatabase();
                     btnConnection.Enabled = false;
+                    btnConfirm.Enabled = true;
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                     btnConnection.Enabled = true;
+                    btnConfirm.Enabled = false;
                 }
                 
             }
