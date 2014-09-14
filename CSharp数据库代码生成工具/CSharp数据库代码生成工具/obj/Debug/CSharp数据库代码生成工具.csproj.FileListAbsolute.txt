@@ -25,3 +25,13 @@ D:\Users\shmily\Documents\GitHub\CSharp-database-code-generation-tool\CSharp数�
 D:\Users\shmily\Documents\GitHub\CSharp-database-code-generation-tool\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.Properties.Resources.resources
 D:\Users\shmily\Documents\GitHub\CSharp-database-code-generation-tool\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.Tables.resources
 D:\Users\shmily\Documents\GitHub\CSharp-database-code-generation-tool\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.csproj.GenerateResource.Cache
+d:\Users\Zengzhi\Documents\GitHub\CSharp-database-code-generation-tool\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.exe
+d:\Users\Zengzhi\Documents\GitHub\CSharp-database-code-generation-tool\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.pdb
+d:\Users\Zengzhi\Documents\GitHub\CSharp-database-code-generation-tool\CSharp数据库代码生成工具\CSharp数据库代码生成工具\bin\Debug\CSharp数据库代码生成工具.exe
+d:\Users\Zengzhi\Documents\GitHub\CSharp-database-code-generation-tool\CSharp数据库代码生成工具\CSharp数据库代码生成工具\bin\Debug\CSharp数据库代码生成工具.pdb
+d:\Users\Zengzhi\Documents\GitHub\CSharp-database-code-generation-tool\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.csprojResolveAssemblyReference.cache
+d:\Users\Zengzhi\Documents\GitHub\CSharp-database-code-generation-tool\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.form11.resources
+d:\Users\Zengzhi\Documents\GitHub\CSharp-database-code-generation-tool\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.Properties.Resources.resources
+d:\Users\Zengzhi\Documents\GitHub\CSharp-database-code-generation-tool\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.ShowDataForm.resources
+d:\Users\Zengzhi\Documents\GitHub\CSharp-database-code-generation-tool\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.Tables.resources
+d:\Users\Zengzhi\Documents\GitHub\CSharp-database-code-generation-tool\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.csproj.GenerateResource.Cache

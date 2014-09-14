@@ -34,15 +34,15 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.listViewColumns = new System.Windows.Forms.ListView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.labSelectTableName = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.listViewTemplate = new System.Windows.Forms.ListView();
-            this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.richTemplate = new System.Windows.Forms.RichTextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.listViewTemplate = new System.Windows.Forms.ListView();
+            this.button3 = new System.Windows.Forms.Button();
             this.richResult = new System.Windows.Forms.RichTextBox();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -61,6 +61,7 @@
             this.listViewTables.UseCompatibleStateImageBehavior = false;
             this.listViewTables.View = System.Windows.Forms.View.Details;
             this.listViewTables.SelectedIndexChanged += new System.EventHandler(this.listViewTables_SelectedIndexChanged);
+            this.listViewTables.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.listViewTables_MouseDoubleClick);
             // 
             // tabControl1
             // 
@@ -114,6 +115,22 @@
             this.tabPage2.Text = "自定义";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.labSelectTableName);
+            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.richTemplate);
+            this.panel1.Controls.Add(this.listViewTemplate);
+            this.panel1.Controls.Add(this.button3);
+            this.panel1.Location = new System.Drawing.Point(3, 313);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(940, 227);
+            this.panel1.TabIndex = 7;
+            // 
             // labSelectTableName
             // 
             this.labSelectTableName.AutoSize = true;
@@ -121,6 +138,19 @@
             this.labSelectTableName.Name = "labSelectTableName";
             this.labSelectTableName.Size = new System.Drawing.Size(0, 12);
             this.labSelectTableName.TabIndex = 6;
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.AutoSize = true;
+            this.button1.Location = new System.Drawing.Point(7, 7);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(927, 37);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "生成";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label1
             // 
@@ -130,6 +160,28 @@
             this.label1.Size = new System.Drawing.Size(77, 12);
             this.label1.TabIndex = 6;
             this.label1.Text = "当前选择表：";
+            // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.Location = new System.Drawing.Point(857, 50);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 3;
+            this.button2.Text = "字段名";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // richTemplate
+            // 
+            this.richTemplate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTemplate.Location = new System.Drawing.Point(185, 87);
+            this.richTemplate.Name = "richTemplate";
+            this.richTemplate.Size = new System.Drawing.Size(752, 140);
+            this.richTemplate.TabIndex = 2;
+            this.richTemplate.Text = "";
             // 
             // listViewTemplate
             // 
@@ -155,41 +207,6 @@
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // button2
-            // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(857, 50);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "字段名";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // richTemplate
-            // 
-            this.richTemplate.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTemplate.Location = new System.Drawing.Point(185, 87);
-            this.richTemplate.Name = "richTemplate";
-            this.richTemplate.Size = new System.Drawing.Size(752, 140);
-            this.richTemplate.TabIndex = 2;
-            this.richTemplate.Text = "";
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.AutoSize = true;
-            this.button1.Location = new System.Drawing.Point(7, 7);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(927, 37);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "生成";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // richResult
             // 
             this.richResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -200,22 +217,6 @@
             this.richResult.Size = new System.Drawing.Size(937, 301);
             this.richResult.TabIndex = 0;
             this.richResult.Text = "";
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.Controls.Add(this.labSelectTableName);
-            this.panel1.Controls.Add(this.button1);
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.richTemplate);
-            this.panel1.Controls.Add(this.listViewTemplate);
-            this.panel1.Controls.Add(this.button3);
-            this.panel1.Location = new System.Drawing.Point(3, 313);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(940, 227);
-            this.panel1.TabIndex = 7;
             // 
             // Tables
             // 

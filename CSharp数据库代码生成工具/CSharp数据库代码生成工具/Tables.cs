@@ -19,6 +19,21 @@ namespace CSharp数据库代码生成工具
         }
         public string StrDatabase,StrTableName="";
         public Dictionary<string, string> dic = new Dictionary<string, string>();
+        public string strTableName
+        {
+            get
+            {
+                return StrTableName;
+            }
+        }
+        public string strDatabase
+        {
+            get
+            {
+                return StrDatabase;
+            }
+        }
+        
         private void Tables_Load(object sender, EventArgs e)
         {
             Hide();
@@ -45,23 +60,34 @@ namespace CSharp数据库代码生成工具
 
             // 针对数据库的字段名称，建立与之适应显示表头 
             listViewTables.Columns.Add("序号", 50, HorizontalAlignment.Left);
-            listViewTables.Columns.Add("表名", 200, HorizontalAlignment.Left);
-            listViewTables.Columns.Add("说明", 150, HorizontalAlignment.Left);
+            listViewTables.Columns.Add("表名", 180, HorizontalAlignment.Left);
+            listViewTables.Columns.Add("表说明", 120, HorizontalAlignment.Left);
+            listViewTables.Columns.Add("数据总数", 80, HorizontalAlignment.Left);
             listViewTables.Visible = true;
 
             // 针对数据库的字段名称，建立与之适应显示表头  避免没选择表时左侧为空
             listViewColumns.Columns.Add("序号", 50, HorizontalAlignment.Left);
             listViewColumns.Columns.Add("字段名", 120, HorizontalAlignment.Left);
             listViewColumns.Columns.Add("字段类型", 80, HorizontalAlignment.Left);
-            listViewColumns.Columns.Add("字段说明", 150, HorizontalAlignment.Left);
+            listViewColumns.Columns.Add("字段说明", 120, HorizontalAlignment.Left);
+            listViewColumns.Columns.Add("数据总数", 80, HorizontalAlignment.Left);
             listViewColumns.Visible = true;
 
-            var sql = " select top 1000" +
-                               " a.name AS 表名 ," +
-                               " isnull(g.[value],'-') AS 说明" +
-                               " from" +
-                               " sys.tables a left join sys.extended_properties g " +
-                               "on (a.object_id = g.major_id AND g.minor_id = 0) order by 表名 asc";
+            //var sql = " select top 1000" +
+            //                   " a.name AS 表名 ," +
+            //                   " isnull(g.[value],'-') AS 说明" +
+            //                   " from" +
+            //                   " sys.tables a left join sys.extended_properties g " +
+            //                   "on (a.object_id = g.major_id AND g.minor_id = 0) order by 表名 asc";
+
+            var sql = "SELECT a.name AS 表名,isnull(g.[value],'-') AS 说明, b.rows as 总数"+
+                       " FROM sysobjects a WITH(NOLOCK)" +
+                       " JOIN sysindexes b WITH(NOLOCK)" +
+                       " ON b.id = a.id" +
+                       "  left join sys.extended_properties g" +
+                       "  on b.id=g.major_id " +
+                       " WHERE a.xtype = 'U ' AND b.indid IN (0, 1) " +
+                       " ORDER By a.name ASC ";
 
             ListViewHelper.DisplayDataSet(listViewTables, GetDataSet(sql), true);
             //int i = 0;
@@ -112,6 +138,8 @@ namespace CSharp数据库代码生成工具
                 StrTableName = listViewTables.SelectedItems[0].SubItems[1].Text;
                 
                 LoadTableColumns(StrTableName);
+
+                Clipboard.SetDataObject(StrTableName); //则把数据置于剪切板中
 
                 for (int i = 0; i < listViewTables.Items.Count; i++)
                 {
@@ -276,6 +304,26 @@ namespace CSharp数据库代码生成工具
             {
                 Clipboard.SetDataObject(listViewColumns.SelectedItems[0].SubItems[1].Text);
             }
+        }
+     
+        private void listViewTables_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ListViewHitTestInfo info = listViewTables.HitTest(e.X, e.Y);
+            if (info.Item != null)
+            {
+                if (int.Parse(info.Item.SubItems[3].Text)>0)
+                {
+                    StrTableName = info.Item.SubItems[1].Text;
+                    //MessageBox.Show(StrTableName);
+                    ShowDataForm table = new ShowDataForm();
+                    table.Owner = this;
+                    table.ShowDialog();
+                }
+                else
+                {
+                    MessageBox.Show("此表木有数据！");
+                }
+            } 
         }
 
 
