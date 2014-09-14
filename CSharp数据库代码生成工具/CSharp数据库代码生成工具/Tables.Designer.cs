@@ -227,7 +227,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Tables";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "CSharp-database-code-generation-tool v1.1";
+            this.Text = "CSharp-database-code-generation-tool v1.2";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Tables_FormClosing);
             this.Load += new System.EventHandler(this.Tables_Load);
             this.tabControl1.ResumeLayout(false);
