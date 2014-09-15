@@ -35,3 +35,4 @@ d:\Users\Zengzhi\Documents\GitHub\CSharp-database-code-generation-tool\CSharp数
 d:\Users\Zengzhi\Documents\GitHub\CSharp-database-code-generation-tool\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.ShowDataForm.resources
 d:\Users\Zengzhi\Documents\GitHub\CSharp-database-code-generation-tool\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.Tables.resources
 d:\Users\Zengzhi\Documents\GitHub\CSharp-database-code-generation-tool\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.csproj.GenerateResource.Cache
+D:\Users\shmily\Documents\GitHub\CSharp-database-code-generation-tool\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.ShowDataForm.resources

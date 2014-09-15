@@ -80,14 +80,16 @@ namespace CSharp数据库代码生成工具
             //                   " sys.tables a left join sys.extended_properties g " +
             //                   "on (a.object_id = g.major_id AND g.minor_id = 0) order by 表名 asc";
 
-            var sql = "SELECT a.name AS 表名,isnull(g.[value],'-') AS 说明, b.rows as 总数"+
+            var sql = "SELECT a.name AS 表名, isnull(d.[value],'-') AS 说明, b.rows as 总数"+
                        " FROM sysobjects a WITH(NOLOCK)" +
                        " JOIN sysindexes b WITH(NOLOCK)" +
                        " ON b.id = a.id" +
-                       "  left join sys.extended_properties g" +
-                       "  on b.id=g.major_id " +
-                       " WHERE a.xtype = 'U ' AND b.indid IN (0, 1) " +
-                       " ORDER By a.name ASC ";
+                       " join sys.tables t" +
+                       " on t.object_id=a.id" +
+                       " left join sys.extended_properties d" +
+                       " on (t.object_id = d.major_id AND d.minor_id = 0)" +
+                       " WHERE a.xtype = 'U ' AND b.indid IN (0, 1)" +
+                       " ORDER By a.name ASC";
 
             ListViewHelper.DisplayDataSet(listViewTables, GetDataSet(sql), true);
             //int i = 0;

@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Maunite.DBUtility;
 
 namespace CSharp数据库代码生成工具
 {
@@ -21,7 +22,7 @@ namespace CSharp数据库代码生成工具
             var strTableName = ((Tables)this.Owner).StrTableName;
             this.Text = strTableName + "-" + "表数据";
 
-            var ds = ((Tables)this.Owner).GetDataSet("select * from " + strTableName);
+            var ds = ((Tables)this.Owner).GetDataSet("Select  * from " + strTableName);
             dataGridView1.DataSource = ds.Tables[0];
             dataGridView1.AutoGenerateColumns = false;
             //MessageBox.Show(((Tables)this.Owner).StrTableName);
