@@ -61,6 +61,16 @@ namespace CSharp数据库代码生成工具.Properties {
         }
         
         /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap _1111 {
+            get {
+                object obj = ResourceManager.GetObject("1111", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 请选择要操作的表 的本地化字符串。
         /// </summary>
         internal static string Tables_button1_Click_请选择要操作的表 {

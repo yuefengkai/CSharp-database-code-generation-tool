@@ -100,6 +100,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\1111.jpg" />
     <Content Include="virtualdrivemaster.exe%28128%29.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

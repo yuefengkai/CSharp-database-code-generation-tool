@@ -15,7 +15,7 @@ namespace CSharp数据库代码生成工具
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new form11());
+            Application.Run(new Tables());
         }
     }
 }

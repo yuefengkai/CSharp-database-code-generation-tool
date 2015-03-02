@@ -1,4 +1,7 @@
-﻿using Common;
+﻿using System.Collections;
+using System.IO;
+using System.Xml;
+using Common;
 using Maunite.DBUtility;
 using System;
 using System.Collections.Generic;
@@ -17,6 +20,7 @@ namespace CSharp数据库代码生成工具
         {
             InitializeComponent();
         }
+        private string _strConn = "";
         public string StrDatabase,StrTableName="";
         public Dictionary<string, string> dic = new Dictionary<string, string>();
         public string strTableName
@@ -36,17 +40,29 @@ namespace CSharp数据库代码生成工具
         
         private void Tables_Load(object sender, EventArgs e)
         {
-            Hide();
+            //Hide();
             listViewTables.GridLines = true;//显示各个记录的分隔线 
             listViewTables.FullRowSelect = true;//要选择就是一行 
             listViewTables.View = View.Details;//定义列表显示的方式 
             listViewTables.Scrollable = true;//需要时候显示滚动条 
             listViewTables.MultiSelect = false; // 不可以多行选择 
             listViewTables.HeaderStyle = ColumnHeaderStyle.Clickable;
-            StrDatabase = ((form11)this.Owner).comDataBaseText;
-            LoadData();
 
-        }
+           // tabPage2.Parent = tabPage1.Parent = null;
+
+            labDataBase.Visible = false;
+            comDataBase.Visible = false;
+
+            label4.Text = @"如果在使用中有不明白的地方可以咨询作者。";
+            label5.Text = @"作者:高增智";
+            label6.Text = @"QQ:365238004 ";
+            //linkLabel1.lin
+
+            // StrDatabase = ((form11)this.Owner).comDataBaseText;
+            // LoadData();
+
+        } 
+        
 
         //***********************得到数据集并绑定到listViewTables控件************/
         //清空listViewTables
@@ -136,6 +152,7 @@ namespace CSharp数据库代码生成工具
         {
             if (listViewTables.SelectedItems.Count > 0)
             {
+               
                 //MessageBox.Show(listViewTables.SelectedItems[0].SubItems[1].Text+@"-"+listViewTables.SelectedItems[0].SubItems[2].Text);
                 StrTableName = listViewTables.SelectedItems[0].SubItems[1].Text;
                 
@@ -188,6 +205,11 @@ namespace CSharp数据库代码生成工具
         {
             if (tabControl1.SelectedIndex == 1)
             {
+                if (string.IsNullOrEmpty(StrDatabase))
+                {
+                    MessageBox.Show("请先连接数据库！");
+                    return;
+                }
                 //MessageBox.Show(StrTableName);
                 richTemplate.Text = "model.字段名 = txt字段名.Text;//字段说明";
 
@@ -223,6 +245,13 @@ namespace CSharp数据库代码生成工具
                 }
 
                 labSelectTableName.Text = StrTableName;
+            }else if (tabControl1.SelectedIndex == 2)
+            {
+                if (string.IsNullOrEmpty(StrDatabase))
+                {
+                    MessageBox.Show("请先连接数据库！");
+                    return;
+                }
             }
         }
 
@@ -304,7 +333,7 @@ namespace CSharp数据库代码生成工具
         {
             if (listViewColumns.SelectedItems.Count > 0)
             {
-                Clipboard.SetDataObject(listViewColumns.SelectedItems[0].SubItems[1].Text);
+                Clipboard.SetDataObject(textBox1.Text.Trim() + listViewColumns.SelectedItems[0].SubItems[1].Text);
             }
         }
      
@@ -327,6 +356,256 @@ namespace CSharp数据库代码生成工具
                 }
             } 
         }
+
+        private void btnConnection_Click(object sender, EventArgs e)
+        {
+            if (txtUser.Text.Trim() != "" && txtPwd.Text.Trim() != "" && txtServerUrl.Text.Trim() != "")
+            {
+                try
+                {
+                    _strConn = "server=" + txtServerUrl.Text.Trim() + ";uid=" + txtUser.Text.Trim() + ";pwd=" + txtPwd.Text.Trim() + ";database=master";
+
+                    DbHelperSQL.connectionString = _strConn;
+                    BindDatabase();
+                    btnConnection.Enabled = false;
+                    btnConfirm.Enabled = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    btnConnection.Enabled = true;
+                    btnConfirm.Enabled = false;
+                }
+
+            }
+        }
+        /// <summary>
+        /// 数据库连接
+        /// </summary>
+        /// <returns></returns>
+        public void BindDatabase()
+        {
+
+            var ds = DbHelperSQL.Query("select * from [sysdatabases] order by [name]");
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+
+                comDataBase.DataSource = ds.Tables[0];    //将表绑定到控件
+                comDataBase.DisplayMember = "name";     //定义要显示的内容为列名为x的内容
+                comDataBase.ValueMember = "dbid";       //定义要映射的值为y的值
+
+                labDataBase.Visible = true;
+                comDataBase.Visible = true;
+
+            }
+
+
+
+        }
+
+        private void btnConfirm_Click(object sender, EventArgs e)
+        {
+
+            //tabPage2.Parent = tabPage1.Parent = tabControl1;
+
+            StrDatabase = comDataBase.Text;
+             LoadData();
+            tabControl1.SelectTab(1);
+        }
+
+       
+        private void BtnChange_Click_1(object sender, EventArgs e)
+        {
+            this.txtbBottom.Text = changetext(this.txtbTop.Text);
+        }
+       
+        private string changetext(string strText)
+        {
+            StringBuilder builder = new StringBuilder();
+            string[] strcom = strText.Trim().Split(new string[] { "\r\n" }, StringSplitOptions.None);
+            char[] cha = { '=', ';' };
+            string[] team;
+            foreach (string item in strcom)
+            {
+                if (item.Contains("=") && item.Contains(";"))
+                {
+                    team = item.Trim().Split(cha);
+
+                    builder.Append(Environment.NewLine);
+                    builder.Append(subRep(team[1]) + "=" + team[0] + ";" + team[2]);
+                    builder.Append(Environment.NewLine);
+                }
+                else
+                {
+                    builder.Append(Environment.NewLine);
+                    builder.Append(item);
+                    builder.Append(Environment.NewLine);
+                }
+            }
+            return builder.ToString();
+        }
+
+        private string subRep(string strt)
+        {
+            if (strt.IndexOf(".Trim()") == -1)
+            {
+                return strt;
+            }
+            else
+            {
+                return strt.Substring(0, strt.IndexOf(".Trim()"));
+            }
+        }
+
+        private string Convert0ToCSharp(string strs, string _SourceCode)
+        {
+            if (string.IsNullOrEmpty(strs))
+            {
+                strs = "sb";
+            }
+            StringBuilder builder = new StringBuilder();
+            builder.Append("<%");
+            builder.Append(Environment.NewLine);
+            builder.Append("StringBuilder " + strs + " = new StringBuilder();");
+            builder.Append(Environment.NewLine);
+            builder.Append(Environment.NewLine);
+            string[] strArray = _SourceCode.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+            for (int i = 0; i < strArray.Length; i++)
+            {
+                string str = strArray[i].Replace(@"\", @"\\").Replace("\"", "\\\"");
+                builder.AppendFormat("" + strs + ".AppendLine(\"{0}\");", str);
+                builder.Append(Environment.NewLine);
+            }
+            builder.Append(Environment.NewLine);
+            builder.Append("return " + strs + ".ToString();");
+            builder.Append(Environment.NewLine);
+            builder.Append("%>");
+            return builder.ToString();
+        }
+
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            this.txtbBottom.Text = Convert0ToCSharp(this.TxtbString.Text.Trim(), this.txtbTop.Text);
+        }
+
+        private void BtnClear_Click(object sender, EventArgs e)
+        {
+            this.txtbTop.Text = "";
+            this.txtbBottom.Text = "";
+        }
+
+        private void btnaddfile_Click(object sender, EventArgs e)
+        {
+            this.openFileDialog1.ShowDialog();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (this.openFileDialog1.FileName.IndexOf(".") > 0)
+            {
+                this.txtformatxml.Text = FormatXmlFile(this.openFileDialog1.FileName);
+            }
+            else
+            {
+                this.txtformatxml.Text = FormatXmlString(this.txtformatxmlsource.Text.Trim());
+            }
+        }
+
+
+        /// <summary>
+        /// 格式化字符串
+        /// </summary>
+        /// <param name="AString"></param>
+        /// <returns></returns>
+        public static string FormatXmlString(string AString)
+        {
+            string str2;
+            try
+            {
+                MemoryStream w = new MemoryStream(0x400);
+                XmlTextWriter writer = new XmlTextWriter(w, null);
+                XmlDocument document = new XmlDocument();
+                writer.Formatting = Formatting.Indented;
+                document.LoadXml(AString);
+                document.WriteTo(writer);
+                writer.Flush();
+                writer.Close();
+                str2 = Encoding.GetEncoding("utf-8").GetString(w.ToArray());
+                w.Close();
+            }
+            catch (Exception exception1)
+            {
+                //ProjectData.SetProjectError(exception1);
+                //Exception exception = exception1;
+                str2 = "";
+                //Interaction.MsgBox(exception.Message, MsgBoxStyle.OkOnly, null);
+                //ProjectData.ClearProjectError();
+            }
+            return str2;
+        }
+
+        /// <summary>
+        /// 格式化文件
+        /// </summary>
+        /// <param name="AFile"></param>
+        /// <returns></returns>
+        public static string FormatXmlFile(string AFile)
+        {
+            string str2;
+            try
+            {
+                MemoryStream w = new MemoryStream(0x400);
+                XmlTextWriter writer = new XmlTextWriter(w, null);
+                XmlDocument document = new XmlDocument();
+                writer.Formatting = Formatting.Indented;
+                document.Load(AFile);
+                document.WriteTo(writer);
+                writer.Flush();
+                writer.Close();
+                str2 = Encoding.GetEncoding("utf-8").GetString(w.ToArray());
+                w.Close();
+            }
+            catch (Exception exception1)
+            {
+                //ProjectData.SetProjectError(exception1);
+                //Exception exception = exception1;
+                str2 = "";
+                //Interaction.MsgBox(exception.Message, MsgBoxStyle.OkOnly, null);
+                //ProjectData.ClearProjectError();
+            }
+            return str2;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            this.txtformatxml.Text = "";
+            this.txtformatxmlsource.Text = "";
+        }
+
+        private void btnsavefile_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    //this.Save_Path_Text.Text = this.CheckFileJ.SelectedPath + @"\";
+                    File.WriteAllText(this.saveFileDialog1.FileName + "_Format.xml", txtformatxml.Text, Encoding.UTF8);
+
+                    MessageBox.Show("保存成功！");
+                }
+            }
+            catch (Exception exception1)
+            {
+                //ProjectData.SetProjectError(exception1);
+                //Exception exception = exception1;
+                //Interaction.MsgBox(exception.Message, MsgBoxStyle.OkOnly, null);
+                //ProjectData.ClearProjectError();
+            }
+        }
+
+       
+
 
 
     }
