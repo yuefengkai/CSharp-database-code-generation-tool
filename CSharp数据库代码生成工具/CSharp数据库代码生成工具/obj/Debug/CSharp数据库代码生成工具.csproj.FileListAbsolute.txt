@@ -36,3 +36,12 @@ F:\MyText\CSharp数据库代码生成工具\CSharp数据库代码生成工具\ob
 F:\MyText\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.csproj.GenerateResource.Cache
 F:\MyText\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.exe
 F:\MyText\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.pdb
+F:\MyText\CSharp数据库代码生成工具\代码生成器\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.exe
+F:\MyText\CSharp数据库代码生成工具\代码生成器\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.pdb
+F:\MyText\CSharp数据库代码生成工具\代码生成器\CSharp数据库代码生成工具\bin\Debug\CSharp数据库代码生成工具.exe
+F:\MyText\CSharp数据库代码生成工具\代码生成器\CSharp数据库代码生成工具\bin\Debug\CSharp数据库代码生成工具.pdb
+F:\MyText\CSharp数据库代码生成工具\代码生成器\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.form11.resources
+F:\MyText\CSharp数据库代码生成工具\代码生成器\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.Properties.Resources.resources
+F:\MyText\CSharp数据库代码生成工具\代码生成器\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.ShowDataForm.resources
+F:\MyText\CSharp数据库代码生成工具\代码生成器\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.Tables.resources
+F:\MyText\CSharp数据库代码生成工具\代码生成器\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.csproj.GenerateResource.Cache
