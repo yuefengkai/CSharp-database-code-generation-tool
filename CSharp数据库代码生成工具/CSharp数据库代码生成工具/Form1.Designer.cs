@@ -55,9 +55,11 @@
             this.groupBox1.Controls.Add(this.txtServerUrl);
             this.groupBox1.Controls.Add(this.labUser);
             this.groupBox1.Controls.Add(this.labServerUrl);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(24, 24);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(499, 226);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox1.Size = new System.Drawing.Size(998, 552);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "服务器";
@@ -65,9 +67,10 @@
             // btnConfirm
             // 
             this.btnConfirm.Enabled = false;
-            this.btnConfirm.Location = new System.Drawing.Point(292, 197);
+            this.btnConfirm.Location = new System.Drawing.Point(584, 394);
+            this.btnConfirm.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnConfirm.Name = "btnConfirm";
-            this.btnConfirm.Size = new System.Drawing.Size(75, 23);
+            this.btnConfirm.Size = new System.Drawing.Size(150, 46);
             this.btnConfirm.TabIndex = 4;
             this.btnConfirm.Text = "确定";
             this.btnConfirm.UseVisualStyleBackColor = true;
@@ -77,16 +80,18 @@
             // 
             this.comDataBase.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comDataBase.FormattingEnabled = true;
-            this.comDataBase.Location = new System.Drawing.Point(130, 157);
+            this.comDataBase.Location = new System.Drawing.Point(260, 314);
+            this.comDataBase.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.comDataBase.Name = "comDataBase";
-            this.comDataBase.Size = new System.Drawing.Size(302, 20);
+            this.comDataBase.Size = new System.Drawing.Size(600, 32);
             this.comDataBase.TabIndex = 3;
             // 
             // btnConnection
             // 
-            this.btnConnection.Location = new System.Drawing.Point(130, 197);
+            this.btnConnection.Location = new System.Drawing.Point(260, 394);
+            this.btnConnection.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.btnConnection.Name = "btnConnection";
-            this.btnConnection.Size = new System.Drawing.Size(75, 23);
+            this.btnConnection.Size = new System.Drawing.Size(150, 46);
             this.btnConnection.TabIndex = 2;
             this.btnConnection.Text = "连接";
             this.btnConnection.UseVisualStyleBackColor = true;
@@ -94,74 +99,82 @@
             // 
             // txtPwd
             // 
-            this.txtPwd.Location = new System.Drawing.Point(130, 118);
+            this.txtPwd.Location = new System.Drawing.Point(260, 236);
+            this.txtPwd.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.txtPwd.Name = "txtPwd";
             this.txtPwd.PasswordChar = '*';
-            this.txtPwd.Size = new System.Drawing.Size(302, 21);
+            this.txtPwd.Size = new System.Drawing.Size(600, 35);
             this.txtPwd.TabIndex = 1;
             this.txtPwd.Text = "sa";
             // 
             // txtUser
             // 
-            this.txtUser.Location = new System.Drawing.Point(130, 78);
+            this.txtUser.Location = new System.Drawing.Point(260, 156);
+            this.txtUser.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.txtUser.Name = "txtUser";
-            this.txtUser.Size = new System.Drawing.Size(302, 21);
+            this.txtUser.Size = new System.Drawing.Size(600, 35);
             this.txtUser.TabIndex = 1;
             this.txtUser.Text = "sa";
             // 
             // labDataBase
             // 
             this.labDataBase.AutoSize = true;
-            this.labDataBase.Location = new System.Drawing.Point(71, 160);
+            this.labDataBase.Location = new System.Drawing.Point(142, 320);
+            this.labDataBase.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labDataBase.Name = "labDataBase";
-            this.labDataBase.Size = new System.Drawing.Size(53, 12);
+            this.labDataBase.Size = new System.Drawing.Size(106, 24);
             this.labDataBase.TabIndex = 0;
             this.labDataBase.Text = "数据库：";
             // 
             // labPwd
             // 
             this.labPwd.AutoSize = true;
-            this.labPwd.Location = new System.Drawing.Point(82, 121);
+            this.labPwd.Location = new System.Drawing.Point(164, 242);
+            this.labPwd.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labPwd.Name = "labPwd";
-            this.labPwd.Size = new System.Drawing.Size(41, 12);
+            this.labPwd.Size = new System.Drawing.Size(82, 24);
             this.labPwd.TabIndex = 0;
             this.labPwd.Text = "密码：";
             // 
             // txtServerUrl
             // 
-            this.txtServerUrl.Location = new System.Drawing.Point(131, 35);
+            this.txtServerUrl.Location = new System.Drawing.Point(262, 70);
+            this.txtServerUrl.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.txtServerUrl.Name = "txtServerUrl";
-            this.txtServerUrl.Size = new System.Drawing.Size(302, 21);
+            this.txtServerUrl.Size = new System.Drawing.Size(600, 35);
             this.txtServerUrl.TabIndex = 1;
             this.txtServerUrl.Text = "192.168.10.162\\MSSQL_2005";
             // 
             // labUser
             // 
             this.labUser.AutoSize = true;
-            this.labUser.Location = new System.Drawing.Point(71, 81);
+            this.labUser.Location = new System.Drawing.Point(142, 162);
+            this.labUser.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labUser.Name = "labUser";
-            this.labUser.Size = new System.Drawing.Size(53, 12);
+            this.labUser.Size = new System.Drawing.Size(106, 24);
             this.labUser.TabIndex = 0;
             this.labUser.Text = "登录名：";
             // 
             // labServerUrl
             // 
             this.labServerUrl.AutoSize = true;
-            this.labServerUrl.Location = new System.Drawing.Point(48, 38);
+            this.labServerUrl.Location = new System.Drawing.Point(96, 76);
+            this.labServerUrl.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.labServerUrl.Name = "labServerUrl";
-            this.labServerUrl.Size = new System.Drawing.Size(77, 12);
+            this.labServerUrl.Size = new System.Drawing.Size(154, 24);
             this.labServerUrl.TabIndex = 0;
             this.labServerUrl.Text = "服务器地址：";
             // 
             // form11
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(523, 250);
+            this.ClientSize = new System.Drawing.Size(1026, 536);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(539, 289);
+            this.MaximumSize = new System.Drawing.Size(1052, 607);
             this.Name = "form11";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CSharp数据库代码生成工具";

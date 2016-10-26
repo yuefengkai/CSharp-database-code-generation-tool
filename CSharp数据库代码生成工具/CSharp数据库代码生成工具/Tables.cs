@@ -23,6 +23,11 @@ namespace CSharp数据库代码生成工具
         }
         private string _strConn = "";
         public string StrDatabase,StrTableName="";
+
+        static Shove.DatabaseFactory.MySQL _MySqlFactory = null;
+
+        bool IsMySql = false;
+
         public Dictionary<string, string> dic = new Dictionary<string, string>();
         public string strTableName
         {
@@ -842,6 +847,11 @@ namespace CSharp数据库代码生成工具
                        " WHERE a.xtype = 'U ' AND b.indid IN (0, 1)" +
                        " ORDER By a.name ASC";
 
+            if (IsMySql)
+            {
+                sql = "select table_name from information_schema.tables where table_schema='"+ StrDatabase + "'";
+            }
+
             ListViewHelper.DisplayDataSet(listViewTables, GetDataSet(sql), true);
             //int i = 0;
             //if (ds != null && ds.Tables[0].Rows.Count > 0)
@@ -870,10 +880,21 @@ namespace CSharp数据库代码生成工具
         {
             try
             {
+                if (IsMySql)
+                {
+                    DataTable dt = _MySqlFactory.ExecuteQuery(sql);
+                    DataSet ds = new DataSet();
+                    ds.Tables.Add(dt);
 
-                DataSet ds = DbHelperSQL.Query("use [" + StrDatabase + "];" + sql);
-                Show();
-                return ds;
+                    Show();
+                    return ds;
+                }
+                else
+                {
+                    DataSet ds = DbHelperSQL.Query("use [" + StrDatabase + "];" + sql);
+                    Show();
+                    return ds;
+                }
             }
             catch (Exception ex)
             {
@@ -932,6 +953,11 @@ namespace CSharp数据库代码生成工具
             sql.AppendLine(" left join sys.extended_properties p on p.major_id=c.id and p.minor_id=c.colid and p.name='MS_Description' left join systypes t on c.xusertype=t.xusertype");
             sql.AppendLine("where o.type='u' ");
             sql.AppendLine("and o.name='" + tableName + "'");
+
+            if (IsMySql)
+            {
+                sql = new StringBuilder("select COLUMN_NAME,COLUMN_TYPE,COLUMN_COMMENT  from information_schema.COLUMNS where table_name = '" + tableName +"';");
+            }
 
             ListViewHelper.DisplayDataSet(listViewColumns, GetDataSet(sql.ToString()), true);
         }
@@ -1004,6 +1030,11 @@ namespace CSharp数据库代码生成工具
             sql.AppendLine("where o.type='u' ");
             sql.AppendLine("and o.name='" + StrTableName + "'");
 
+            if (IsMySql)
+            {
+                sql = new StringBuilder("select COLUMN_NAME,COLUMN_TYPE,COLUMN_COMMENT  from information_schema.COLUMNS where table_name = '" + StrTableName + "';");
+            }
+
             var ds = GetDataSet(sql.ToString());
             if (ds!=null&&ds.Tables[0].Rows.Count>0)
             {
@@ -1011,7 +1042,14 @@ namespace CSharp数据库代码生成工具
                 foreach (DataRow row in ds.Tables[0].Rows)
                 {
                     var temp = richTemplate.Text;
-                    result.AppendLine(temp.Replace("字段名", row["columnName"].ToString()).Replace("字段说明", row["columnDescription"].ToString()));
+                    if (IsMySql)
+                    {
+                        result.AppendLine(temp.Replace("字段名", row["COLUMN_NAME"].ToString()).Replace("字段说明", row["COLUMN_COMMENT"].ToString()));
+                    }
+                    else
+                    {
+                        result.AppendLine(temp.Replace("字段名", row["columnName"].ToString()).Replace("字段说明", row["columnDescription"].ToString()));
+                    }
                 }
                 richResult.Text = result.ToString();
             }
@@ -1094,6 +1132,21 @@ namespace CSharp数据库代码生成工具
 
         private void btnConnection_Click(object sender, EventArgs e)
         {
+            if (comboBox1.SelectedItem.ToString()=="MySql")
+            {
+                IsMySql = true;
+                   _strConn = "server={0}; user id={1}; password={2}; database=information_schema; port={3}; charset=utf8;pooling=true;Max Pool Size=15;";
+                _strConn = string.Format(_strConn, txtServerUrl.Text.Trim(), txtUser.Text.Trim(), txtPwd.Text.Trim(), txt_Port.Text.Trim());
+
+                //Shove.DatabaseFactory.MySQL manage = new Shove.DatabaseFactory.MySQL(_strConn);
+                _MySqlFactory = new Shove.DatabaseFactory.MySQL(_strConn);
+                BindDatabase();
+                btnConnection.Enabled = false;
+                btnConfirm.Enabled = true;
+                return;
+
+            }
+
             if (txtUser.Text.Trim() != "" && txtPwd.Text.Trim() != "" && txtServerUrl.Text.Trim() != "")
             {
                 try
@@ -1120,19 +1173,36 @@ namespace CSharp数据库代码生成工具
         /// <returns></returns>
         public void BindDatabase()
         {
-
-            var ds = DbHelperSQL.Query("select * from [sysdatabases] order by [name]");
-            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            DataSet ds;
+            if (IsMySql)
             {
+                DataTable dt = _MySqlFactory.ExecuteQuery("show databases;");
+                ds = new DataSet();
+                ds.Tables.Add(dt);
 
                 comDataBase.DataSource = ds.Tables[0];    //将表绑定到控件
-                comDataBase.DisplayMember = "name";     //定义要显示的内容为列名为x的内容
-                comDataBase.ValueMember = "dbid";       //定义要映射的值为y的值
+                comDataBase.DisplayMember = "database";     //定义要显示的内容为列名为x的内容
+                comDataBase.ValueMember = "database";       //定义要映射的值为y的值
 
                 labDataBase.Visible = true;
                 comDataBase.Visible = true;
-
             }
+            else
+            {
+                ds = DbHelperSQL.Query("select * from [sysdatabases] order by [name]");
+                if (ds != null && ds.Tables[0].Rows.Count > 0)
+                {
+
+                    comDataBase.DataSource = ds.Tables[0];    //将表绑定到控件
+                    comDataBase.DisplayMember = "name";     //定义要显示的内容为列名为x的内容
+                    comDataBase.ValueMember = "dbid";       //定义要映射的值为y的值
+
+                    labDataBase.Visible = true;
+                    comDataBase.Visible = true;
+
+                }
+            }
+           
 
 
 
@@ -1316,6 +1386,20 @@ namespace CSharp数据库代码生成工具
         {
             this.txtformatxml.Text = "";
             this.txtformatxmlsource.Text = "";
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectValue = comboBox1.SelectedItem.ToString();
+            if (selectValue=="MySql")
+            {
+                txt_Port.Text = "3306";
+                txtUser.Text = "root";
+            }
+            else
+            {
+                txt_Port.Text = "";
+            }
         }
 
         private void btnsavefile_Click(object sender, EventArgs e)

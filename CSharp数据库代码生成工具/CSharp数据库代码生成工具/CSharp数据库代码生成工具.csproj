@@ -35,6 +35,12 @@
     <ApplicationIcon>virtualdrivemaster.exe%28128%29.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Shove">
+      <HintPath>..\..\branch004\ShoveEIMS3.SiteDataManager\Bin\Shove.dll</HintPath>
+    </Reference>
+    <Reference Include="Shove.Components">
+      <HintPath>..\..\branch004\ShoveEIMS3.SiteDataManager\Bin\Shove.Components.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

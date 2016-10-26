@@ -45,3 +45,28 @@ F:\MyText\CSharp数据库代码生成工具\代码生成器\CSharp数据库代�
 F:\MyText\CSharp数据库代码生成工具\代码生成器\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.ShowDataForm.resources
 F:\MyText\CSharp数据库代码生成工具\代码生成器\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.Tables.resources
 F:\MyText\CSharp数据库代码生成工具\代码生成器\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.csproj.GenerateResource.Cache
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.exe
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.pdb
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\bin\Debug\CSharp数据库代码生成工具.exe
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\bin\Debug\CSharp数据库代码生成工具.pdb
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.csprojResolveAssemblyReference.cache
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.form11.resources
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.Properties.Resources.resources
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.ShowDataForm.resources
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.Tables.resources
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\obj\Debug\CSharp数据库代码生成工具.csproj.GenerateResource.Cache
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\bin\Debug\Shove.Components.dll
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\bin\Debug\Shove.dll
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\bin\Debug\System.Data.SQLite.dll
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\bin\Debug\Microsoft.Office.Interop.Excel.dll
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\bin\Debug\Interop.IISOle.dll
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\bin\Debug\office.dll
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\bin\Debug\Microsoft.Vbe.Interop.dll
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\bin\Debug\stdole.dll
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\bin\Debug\Shove.xml
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\bin\Debug\Shove.Components.pdb
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\bin\Debug\Shove.Components.xml
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\bin\Debug\System.Data.SQLite.pdb
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\bin\Debug\System.Data.SQLite.xml
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\bin\Debug\Microsoft.Office.Interop.Excel.xml
+C:\Users\gaozengzhi\Documents\MY Work Space\xiniuDB\branch\CSharp数据库代码生成工具\CSharp数据库代码生成工具\bin\Debug\office.xml
