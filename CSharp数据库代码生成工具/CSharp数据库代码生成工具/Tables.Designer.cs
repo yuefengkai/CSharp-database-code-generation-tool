@@ -33,15 +33,19 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txt_Port = new System.Windows.Forms.TextBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.btnConfirm = new System.Windows.Forms.Button();
             this.comDataBase = new System.Windows.Forms.ComboBox();
             this.btnConnection = new System.Windows.Forms.Button();
             this.txtPwd = new System.Windows.Forms.TextBox();
             this.txtUser = new System.Windows.Forms.TextBox();
             this.labDataBase = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.labPwd = new System.Windows.Forms.Label();
             this.txtServerUrl = new System.Windows.Forms.TextBox();
             this.labUser = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.labServerUrl = new System.Windows.Forms.Label();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -82,10 +86,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txt_Port = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -112,7 +112,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.listViewTables.GridLines = true;
             this.listViewTables.Location = new System.Drawing.Point(12, 66);
-            this.listViewTables.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.listViewTables.Margin = new System.Windows.Forms.Padding(6);
             this.listViewTables.Name = "listViewTables";
             this.listViewTables.Size = new System.Drawing.Size(894, 998);
             this.listViewTables.TabIndex = 0;
@@ -132,7 +132,7 @@
             this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(6);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1902, 1132);
@@ -144,9 +144,9 @@
             this.tabPage3.BackColor = System.Drawing.SystemColors.Control;
             this.tabPage3.Controls.Add(this.groupBox1);
             this.tabPage3.Location = new System.Drawing.Point(8, 39);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(6);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(6);
             this.tabPage3.Size = new System.Drawing.Size(1886, 1085);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "数据库";
@@ -168,19 +168,39 @@
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.labServerUrl);
             this.groupBox1.Location = new System.Drawing.Point(444, 280);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(6);
             this.groupBox1.Size = new System.Drawing.Size(1088, 591);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "服务器";
             // 
+            // txt_Port
+            // 
+            this.txt_Port.Location = new System.Drawing.Point(740, 155);
+            this.txt_Port.Name = "txt_Port";
+            this.txt_Port.Size = new System.Drawing.Size(100, 35);
+            this.txt_Port.TabIndex = 6;
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "MySql",
+            "MsSql"});
+            this.comboBox1.Location = new System.Drawing.Point(258, 86);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 32);
+            this.comboBox1.TabIndex = 5;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
             // btnConfirm
             // 
             this.btnConfirm.Enabled = false;
             this.btnConfirm.Location = new System.Drawing.Point(580, 479);
-            this.btnConfirm.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btnConfirm.Margin = new System.Windows.Forms.Padding(6);
             this.btnConfirm.Name = "btnConfirm";
             this.btnConfirm.Size = new System.Drawing.Size(150, 46);
             this.btnConfirm.TabIndex = 4;
@@ -193,7 +213,7 @@
             this.comDataBase.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comDataBase.FormattingEnabled = true;
             this.comDataBase.Location = new System.Drawing.Point(256, 399);
-            this.comDataBase.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.comDataBase.Margin = new System.Windows.Forms.Padding(6);
             this.comDataBase.Name = "comDataBase";
             this.comDataBase.Size = new System.Drawing.Size(600, 32);
             this.comDataBase.TabIndex = 3;
@@ -201,7 +221,7 @@
             // btnConnection
             // 
             this.btnConnection.Location = new System.Drawing.Point(256, 479);
-            this.btnConnection.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btnConnection.Margin = new System.Windows.Forms.Padding(6);
             this.btnConnection.Name = "btnConnection";
             this.btnConnection.Size = new System.Drawing.Size(150, 46);
             this.btnConnection.TabIndex = 2;
@@ -212,7 +232,7 @@
             // txtPwd
             // 
             this.txtPwd.Location = new System.Drawing.Point(256, 321);
-            this.txtPwd.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtPwd.Margin = new System.Windows.Forms.Padding(6);
             this.txtPwd.Name = "txtPwd";
             this.txtPwd.PasswordChar = '*';
             this.txtPwd.Size = new System.Drawing.Size(600, 35);
@@ -222,7 +242,7 @@
             // txtUser
             // 
             this.txtUser.Location = new System.Drawing.Point(256, 241);
-            this.txtUser.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtUser.Margin = new System.Windows.Forms.Padding(6);
             this.txtUser.Name = "txtUser";
             this.txtUser.Size = new System.Drawing.Size(600, 35);
             this.txtUser.TabIndex = 1;
@@ -238,6 +258,16 @@
             this.labDataBase.TabIndex = 0;
             this.labDataBase.Text = "数据库：";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(672, 161);
+            this.label8.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(82, 24);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "端口：";
+            // 
             // labPwd
             // 
             this.labPwd.AutoSize = true;
@@ -251,7 +281,7 @@
             // txtServerUrl
             // 
             this.txtServerUrl.Location = new System.Drawing.Point(258, 155);
-            this.txtServerUrl.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtServerUrl.Margin = new System.Windows.Forms.Padding(6);
             this.txtServerUrl.Name = "txtServerUrl";
             this.txtServerUrl.Size = new System.Drawing.Size(402, 35);
             this.txtServerUrl.TabIndex = 1;
@@ -266,6 +296,16 @@
             this.labUser.Size = new System.Drawing.Size(106, 24);
             this.labUser.TabIndex = 0;
             this.labUser.Text = "登录名：";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(92, 94);
+            this.label7.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(106, 24);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "数据库：";
             // 
             // labServerUrl
             // 
@@ -284,9 +324,9 @@
             this.tabPage1.Controls.Add(this.listViewColumns);
             this.tabPage1.Controls.Add(this.listViewTables);
             this.tabPage1.Location = new System.Drawing.Point(8, 39);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(6);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(6);
             this.tabPage1.Size = new System.Drawing.Size(1886, 1085);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "数据库-选择表";
@@ -295,7 +335,7 @@
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(1048, 12);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(6);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(196, 35);
             this.textBox1.TabIndex = 2;
@@ -318,7 +358,7 @@
             this.listViewColumns.FullRowSelect = true;
             this.listViewColumns.GridLines = true;
             this.listViewColumns.Location = new System.Drawing.Point(922, 66);
-            this.listViewColumns.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.listViewColumns.Margin = new System.Windows.Forms.Padding(6);
             this.listViewColumns.Name = "listViewColumns";
             this.listViewColumns.Size = new System.Drawing.Size(954, 998);
             this.listViewColumns.TabIndex = 0;
@@ -332,9 +372,9 @@
             this.tabPage2.Controls.Add(this.panel1);
             this.tabPage2.Controls.Add(this.richResult);
             this.tabPage2.Location = new System.Drawing.Point(8, 39);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(6);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(6);
             this.tabPage2.Size = new System.Drawing.Size(1886, 1085);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "数据库-自定义模板";
@@ -352,7 +392,7 @@
             this.panel1.Controls.Add(this.listViewTemplate);
             this.panel1.Controls.Add(this.button3);
             this.panel1.Location = new System.Drawing.Point(6, 626);
-            this.panel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.panel1.Margin = new System.Windows.Forms.Padding(6);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1880, 454);
             this.panel1.TabIndex = 7;
@@ -372,7 +412,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.AutoSize = true;
             this.button1.Location = new System.Drawing.Point(14, 14);
-            this.button1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.button1.Margin = new System.Windows.Forms.Padding(6);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(1854, 74);
             this.button1.TabIndex = 1;
@@ -394,7 +434,7 @@
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.Location = new System.Drawing.Point(1714, 100);
-            this.button2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.button2.Margin = new System.Windows.Forms.Padding(6);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(150, 46);
             this.button2.TabIndex = 3;
@@ -408,7 +448,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.richTemplate.Location = new System.Drawing.Point(370, 174);
-            this.richTemplate.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.richTemplate.Margin = new System.Windows.Forms.Padding(6);
             this.richTemplate.Name = "richTemplate";
             this.richTemplate.Size = new System.Drawing.Size(1500, 276);
             this.richTemplate.TabIndex = 2;
@@ -420,7 +460,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.listViewTemplate.GridLines = true;
             this.listViewTemplate.Location = new System.Drawing.Point(0, 174);
-            this.listViewTemplate.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.listViewTemplate.Margin = new System.Windows.Forms.Padding(6);
             this.listViewTemplate.Name = "listViewTemplate";
             this.listViewTemplate.Size = new System.Drawing.Size(360, 276);
             this.listViewTemplate.TabIndex = 5;
@@ -432,7 +472,7 @@
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button3.Location = new System.Drawing.Point(1556, 100);
-            this.button3.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.button3.Margin = new System.Windows.Forms.Padding(6);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(150, 46);
             this.button3.TabIndex = 4;
@@ -446,7 +486,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.richResult.Location = new System.Drawing.Point(6, 12);
-            this.richResult.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.richResult.Margin = new System.Windows.Forms.Padding(6);
             this.richResult.Name = "richResult";
             this.richResult.Size = new System.Drawing.Size(1870, 598);
             this.richResult.TabIndex = 0;
@@ -456,9 +496,9 @@
             // 
             this.tabPage4.Controls.Add(this.splitContainer2);
             this.tabPage4.Location = new System.Drawing.Point(8, 39);
-            this.tabPage4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabPage4.Margin = new System.Windows.Forms.Padding(6);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(6);
             this.tabPage4.Size = new System.Drawing.Size(1886, 1085);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "工具-代码转换";
@@ -468,7 +508,7 @@
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer2.Location = new System.Drawing.Point(6, 6);
-            this.splitContainer2.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.splitContainer2.Margin = new System.Windows.Forms.Padding(6);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -494,7 +534,7 @@
             this.txtbTop.AllowDrop = true;
             this.txtbTop.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtbTop.Location = new System.Drawing.Point(0, 0);
-            this.txtbTop.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtbTop.Margin = new System.Windows.Forms.Padding(6);
             this.txtbTop.Multiline = true;
             this.txtbTop.Name = "txtbTop";
             this.txtbTop.ScrollBars = System.Windows.Forms.ScrollBars.Both;
@@ -504,7 +544,7 @@
             // BtnChange
             // 
             this.BtnChange.Location = new System.Drawing.Point(1360, 14);
-            this.BtnChange.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.BtnChange.Margin = new System.Windows.Forms.Padding(6);
             this.BtnChange.Name = "BtnChange";
             this.BtnChange.Size = new System.Drawing.Size(150, 46);
             this.BtnChange.TabIndex = 20;
@@ -519,11 +559,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtbBottom.Location = new System.Drawing.Point(6, 72);
-            this.txtbBottom.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtbBottom.Margin = new System.Windows.Forms.Padding(6);
             this.txtbBottom.Multiline = true;
             this.txtbBottom.Name = "txtbBottom";
             this.txtbBottom.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtbBottom.Size = new System.Drawing.Size(1854, 658);
+            this.txtbBottom.Size = new System.Drawing.Size(1854, 654);
             this.txtbBottom.TabIndex = 21;
             // 
             // label2
@@ -539,7 +579,7 @@
             // BtnClear
             // 
             this.BtnClear.Location = new System.Drawing.Point(1684, 14);
-            this.BtnClear.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.BtnClear.Margin = new System.Windows.Forms.Padding(6);
             this.BtnClear.Name = "BtnClear";
             this.BtnClear.Size = new System.Drawing.Size(150, 46);
             this.BtnClear.TabIndex = 25;
@@ -550,7 +590,7 @@
             // button4
             // 
             this.button4.Location = new System.Drawing.Point(1522, 14);
-            this.button4.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.button4.Margin = new System.Windows.Forms.Padding(6);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(150, 46);
             this.button4.TabIndex = 22;
@@ -561,7 +601,7 @@
             // TxtbString
             // 
             this.TxtbString.Location = new System.Drawing.Point(124, 18);
-            this.TxtbString.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.TxtbString.Margin = new System.Windows.Forms.Padding(6);
             this.TxtbString.Name = "TxtbString";
             this.TxtbString.Size = new System.Drawing.Size(196, 35);
             this.TxtbString.TabIndex = 23;
@@ -570,9 +610,9 @@
             // 
             this.tabPage5.Controls.Add(this.splitContainer1);
             this.tabPage5.Location = new System.Drawing.Point(8, 39);
-            this.tabPage5.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabPage5.Margin = new System.Windows.Forms.Padding(6);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(6);
             this.tabPage5.Size = new System.Drawing.Size(1886, 1085);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "工具-XML格式化";
@@ -582,7 +622,7 @@
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(6, 6);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(6);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -606,7 +646,7 @@
             // 
             this.txtformatxmlsource.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtformatxmlsource.Location = new System.Drawing.Point(0, 0);
-            this.txtformatxmlsource.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtformatxmlsource.Margin = new System.Windows.Forms.Padding(6);
             this.txtformatxmlsource.Multiline = true;
             this.txtformatxmlsource.Name = "txtformatxmlsource";
             this.txtformatxmlsource.ScrollBars = System.Windows.Forms.ScrollBars.Both;
@@ -619,17 +659,17 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtformatxml.Location = new System.Drawing.Point(10, 64);
-            this.txtformatxml.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.txtformatxml.Margin = new System.Windows.Forms.Padding(6);
             this.txtformatxml.Multiline = true;
             this.txtformatxml.Name = "txtformatxml";
             this.txtformatxml.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtformatxml.Size = new System.Drawing.Size(1850, 748);
+            this.txtformatxml.Size = new System.Drawing.Size(1850, 744);
             this.txtformatxml.TabIndex = 6;
             // 
             // btnsavefile
             // 
             this.btnsavefile.Location = new System.Drawing.Point(1168, 6);
-            this.btnsavefile.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btnsavefile.Margin = new System.Windows.Forms.Padding(6);
             this.btnsavefile.Name = "btnsavefile";
             this.btnsavefile.Size = new System.Drawing.Size(150, 46);
             this.btnsavefile.TabIndex = 10;
@@ -640,7 +680,7 @@
             // btnaddfile
             // 
             this.btnaddfile.Location = new System.Drawing.Point(512, 6);
-            this.btnaddfile.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.btnaddfile.Margin = new System.Windows.Forms.Padding(6);
             this.btnaddfile.Name = "btnaddfile";
             this.btnaddfile.Size = new System.Drawing.Size(150, 46);
             this.btnaddfile.TabIndex = 9;
@@ -651,7 +691,7 @@
             // button5
             // 
             this.button5.Location = new System.Drawing.Point(964, 6);
-            this.button5.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.button5.Margin = new System.Windows.Forms.Padding(6);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(150, 46);
             this.button5.TabIndex = 8;
@@ -662,7 +702,7 @@
             // button6
             // 
             this.button6.Location = new System.Drawing.Point(734, 6);
-            this.button6.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.button6.Margin = new System.Windows.Forms.Padding(6);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(150, 46);
             this.button6.TabIndex = 7;
@@ -674,7 +714,7 @@
             // 
             this.tabPage7.Controls.Add(this.webBrowser1);
             this.tabPage7.Location = new System.Drawing.Point(8, 39);
-            this.tabPage7.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabPage7.Margin = new System.Windows.Forms.Padding(6);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Size = new System.Drawing.Size(1886, 1085);
             this.tabPage7.TabIndex = 6;
@@ -685,7 +725,7 @@
             // 
             this.webBrowser1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.webBrowser1.Location = new System.Drawing.Point(0, 0);
-            this.webBrowser1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.webBrowser1.Margin = new System.Windows.Forms.Padding(6);
             this.webBrowser1.MinimumSize = new System.Drawing.Size(40, 40);
             this.webBrowser1.Name = "webBrowser1";
             this.webBrowser1.Size = new System.Drawing.Size(1886, 1085);
@@ -697,9 +737,9 @@
             this.tabPage6.Controls.Add(this.label5);
             this.tabPage6.Controls.Add(this.label4);
             this.tabPage6.Location = new System.Drawing.Point(8, 39);
-            this.tabPage6.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabPage6.Margin = new System.Windows.Forms.Padding(6);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(6);
             this.tabPage6.Size = new System.Drawing.Size(1886, 1085);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "帮助";
@@ -739,46 +779,6 @@
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
             // 
-            // comboBox1
-            // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "MySql",
-            "MsSql"});
-            this.comboBox1.Location = new System.Drawing.Point(258, 86);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 32);
-            this.comboBox1.TabIndex = 5;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(92, 94);
-            this.label7.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(106, 24);
-            this.label7.TabIndex = 0;
-            this.label7.Text = "数据库：";
-            // 
-            // txt_Port
-            // 
-            this.txt_Port.Location = new System.Drawing.Point(740, 155);
-            this.txt_Port.Name = "txt_Port";
-            this.txt_Port.Size = new System.Drawing.Size(100, 35);
-            this.txt_Port.TabIndex = 6;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(672, 161);
-            this.label8.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(82, 24);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "端口：";
-            // 
             // Tables
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
@@ -786,10 +786,10 @@
             this.ClientSize = new System.Drawing.Size(1902, 1132);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "Tables";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "CSharp-database-code-generation-tool v1.3";
+            this.Text = "CSharp-database-code-generation-tool v1.4";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Tables_FormClosing);
             this.Load += new System.EventHandler(this.Tables_Load);
             this.tabControl1.ResumeLayout(false);

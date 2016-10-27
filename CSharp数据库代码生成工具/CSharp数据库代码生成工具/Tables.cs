@@ -12,6 +12,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
 
 namespace CSharp数据库代码生成工具
 {
@@ -882,7 +883,7 @@ namespace CSharp数据库代码生成工具
             {
                 if (IsMySql)
                 {
-                    DataTable dt = _MySqlFactory.ExecuteQuery(sql);
+                    DataTable dt = _MySqlFactory.ExecuteQuery("use `" + StrDatabase + "`;" + sql);
                     DataSet ds = new DataSet();
                     ds.Tables.Add(dt);
 
@@ -913,7 +914,6 @@ namespace CSharp数据库代码生成工具
                 StrTableName = listViewTables.SelectedItems[0].SubItems[1].Text;
                 
                 LoadTableColumns(StrTableName);
-
                 Clipboard.SetDataObject(StrTableName); //则把数据置于剪切板中
 
                 for (int i = 0; i < listViewTables.Items.Count; i++)
@@ -972,7 +972,7 @@ namespace CSharp数据库代码生成工具
                     return;
                 }
                 //MessageBox.Show(StrTableName);
-                richTemplate.Text = "model.字段名 = txt字段名.Text;//字段说明";
+                richTemplate.Text = "#startLoop model.字段名 = txt字段名.Text;//字段说明 #endLoop";
 
                 listViewTemplate.GridLines = true;//显示各个记录的分隔线 
                 listViewTemplate.FullRowSelect = true;//要选择就是一行 
@@ -986,13 +986,430 @@ namespace CSharp数据库代码生成工具
                 listViewTemplate.Columns.Add("序号", 50, HorizontalAlignment.Left);
                 listViewTemplate.Columns.Add("模板", 100, HorizontalAlignment.Left);
                 listViewTemplate.Visible = true;
+               
+                #region 实体
+
+                StringBuilder sb = new StringBuilder();
+
+                sb.AppendLine("using System;");
+                sb.AppendLine("using System.Collections.Generic;");
+                sb.AppendLine("using System.Text;");
+                sb.AppendLine("using System.Data;");
+                sb.AppendLine("using ShoveEIMS3.Site.Service.Base;");
+                sb.AppendLine("using Shove.DatabaseFactory;");
+                sb.AppendLine("using ShoveEIMS3.Site.Business;");
+                sb.AppendLine("");
+                sb.AppendLine("namespace ShoveEIMS3.Site.Service");
+                sb.AppendLine("{");
+                sb.AppendLine("    public class #类名# : ShoveEIMS3.Site.Service.Base.Service, IDisposable");
+                sb.AppendLine("    {");
+                sb.AppendLine("        #region 属性");
+                sb.AppendLine("");
+                sb.AppendLine("    	#startLoop");
+                sb.AppendLine("        /// <summary>字段说明");
+                sb.AppendLine("        /// </summary>");
+                sb.AppendLine("        public long 字段名 { get; set; }");
+                sb.AppendLine("    	#endLoop");
+                sb.AppendLine("");
+                sb.AppendLine("        #endregion");
+                sb.AppendLine("");
+                sb.AppendLine("        #region 构造函数");
+                sb.AppendLine("");
+                sb.AppendLine("        public static new string TableName = \"#表名#\";");
+                sb.AppendLine("        public static string[] QueryFields = {#startLoop\"字段名\",#endLoop};");
+                sb.AppendLine("");
+                sb.AppendLine("        /// <summary>");
+                sb.AppendLine("        /// 构造函数");
+                sb.AppendLine("        /// </summary>");
+                sb.AppendLine("        protected #类名#()");
+                sb.AppendLine("            : this(-1) { }");
+                sb.AppendLine("");
+                sb.AppendLine("        /// <summary>");
+                sb.AppendLine("        /// 构造函数");
+                sb.AppendLine("        /// </summary>");
+                sb.AppendLine("        /// <param name=\"id\">运输方式 ID</param>");
+                sb.AppendLine("        protected #类名#(long id)");
+                sb.AppendLine("        {");
+                sb.AppendLine("            base.TableName = TableName;");
+                sb.AppendLine("");
+                sb.AppendLine("            if (id <= 0)");
+                sb.AppendLine("            {");
+                sb.AppendLine("                return;");
+                sb.AppendLine("            }");
+                sb.AppendLine("");
+                sb.AppendLine("            if (!OpenFactory(false))");
+                sb.AppendLine("            {");
+                sb.AppendLine("                return;");
+                sb.AppendLine("            }");
+                sb.AppendLine("");
+                sb.AppendLine("            DataTable dt = null;");
+                sb.AppendLine("            try");
+                sb.AppendLine("            {");
+                sb.AppendLine("                dt = Factory.Open(TableName, new Factory.FieldCollect(QueryFields), \"Id=\" + id, string.Empty, 0, 0);");
+                sb.AppendLine("");
+                sb.AppendLine("            }");
+                sb.AppendLine("            catch (Exception ex)");
+                sb.AppendLine("            {");
+                sb.AppendLine("                CloseFactory(true);");
+                sb.AppendLine("");
+                sb.AppendLine("                SitePublicFunction.RecordError(ex);");
+                sb.AppendLine("                return;");
+                sb.AppendLine("            }");
+                sb.AppendLine("");
+                sb.AppendLine("            CloseFactory(false);");
+                sb.AppendLine("");
+                sb.AppendLine("            if (dt == null || dt.Rows.Count <= 0)");
+                sb.AppendLine("            {");
+                sb.AppendLine("                if (dt != null) dt.Dispose();");
+                sb.AppendLine("");
+                sb.AppendLine("                return;");
+                sb.AppendLine("            }");
+                sb.AppendLine("");
+                sb.AppendLine("            Init(dt.Rows[0]);");
+                sb.AppendLine("");
+                sb.AppendLine("            //释放资源");
+                sb.AppendLine("            dt.Dispose();");
+                sb.AppendLine("        }");
+                sb.AppendLine("");
+                sb.AppendLine("        /// <summary>");
+                sb.AppendLine("        /// 构造函数,通过外部数据行");
+                sb.AppendLine("        /// </summary>");
+                sb.AppendLine("        /// <param name=\"rowDetail\">表据行</param>");
+                sb.AppendLine("        protected #类名# (DataRow rowInfo)");
+                sb.AppendLine("        {");
+                sb.AppendLine("            base.TableName = TableName;");
+                sb.AppendLine("");
+                sb.AppendLine("            Init(rowInfo);");
+                sb.AppendLine("        }");
+                sb.AppendLine("");
+                sb.AppendLine("        void Init(DataRow rowInfo)");
+                sb.AppendLine("        {");
+                sb.AppendLine("            if (rowInfo == null)");
+                sb.AppendLine("            {");
+                sb.AppendLine("                this.ID = -1;");
+                sb.AppendLine("                return;");
+                sb.AppendLine("            }");
+                sb.AppendLine("");
+                sb.AppendLine("			#startLoop");
+                sb.AppendLine("	         this.字段名 = rowInfo[\"字段名\"].ToString();");
+                sb.AppendLine("	    	#endLoop");
+                sb.AppendLine("        }");
+                sb.AppendLine("");
+                sb.AppendLine("        public static #类名# Create()");
+                sb.AppendLine("        {");
+                sb.AppendLine("            return new #类名#();");
+                sb.AppendLine("        }");
+                sb.AppendLine("");
+                sb.AppendLine("        public static #类名# Create(long id)");
+                sb.AppendLine("        {");
+                sb.AppendLine("            return ServiceFactoryCreator.Create<#类名#>(id, (int)SitePublicEnum.DataCacheTime.门店);");
+                sb.AppendLine("        }");
+                sb.AppendLine("");
+                sb.AppendLine("        public static Department Create(DataRow rowInfo)");
+                sb.AppendLine("        {");
+                sb.AppendLine("            return ServiceFactoryCreator.Create<#类名#>(rowInfo, (int)SitePublicEnum.DataCacheTime.门店);");
+                sb.AppendLine("        }");
+                sb.AppendLine("");
+                sb.AppendLine("        public static List<Department> Create(long[] ids)");
+                sb.AppendLine("        {");
+                sb.AppendLine("            return ServiceFactoryCreator.Create<#类名#, #类名#>(TableName, ids, QueryFields);");
+                sb.AppendLine("        }");
+                sb.AppendLine("");
+                sb.AppendLine("");
+                sb.AppendLine("        #endregion");
+                sb.AppendLine("");
+                sb.AppendLine("        #region 释放");
+                sb.AppendLine("");
+                sb.AppendLine("        bool isDispose = false;");
+                sb.AppendLine("");
+                sb.AppendLine("        ~#类名#()");
+                sb.AppendLine("        {");
+                sb.AppendLine("            _Dispose();");
+                sb.AppendLine("        }");
+                sb.AppendLine("");
+                sb.AppendLine("        public void Dispose()");
+                sb.AppendLine("        {");
+                sb.AppendLine("            _Dispose();");
+                sb.AppendLine("            GC.SuppressFinalize(this);");
+                sb.AppendLine("        }");
+                sb.AppendLine("");
+                sb.AppendLine("        private void _Dispose()");
+                sb.AppendLine("        {");
+                sb.AppendLine("            if (isDispose) return;");
+                sb.AppendLine("");
+                sb.AppendLine("            isDispose = true;");
+                sb.AppendLine("        }");
+                sb.AppendLine("");
+                sb.AppendLine("        #endregion");
+                sb.AppendLine("");
+                sb.AppendLine("        #region 方法");
+                sb.AppendLine("");
+                sb.AppendLine("        public override bool VerifyAdd(out string erMsg)");
+                sb.AppendLine("        {");
+                sb.AppendLine("            throw new NotImplementedException();");
+                sb.AppendLine("        }");
+                sb.AppendLine("");
+                sb.AppendLine("        public override bool VerifyUpdate(out string erMsg)");
+                sb.AppendLine("        {");
+                sb.AppendLine("            throw new NotImplementedException();");
+                sb.AppendLine("        }");
+                sb.AppendLine("        #endregion");
+                sb.AppendLine("    }");
+                sb.AppendLine("}");
+                sb.AppendLine("");
+                #endregion
+
+                #region 集合
+
+                StringBuilder sb2 = new StringBuilder();
+
+                sb2.AppendLine("using System;");
+                sb2.AppendLine("using System.Collections.Generic;");
+                sb2.AppendLine("using System.Text;");
+                sb2.AppendLine("using ShoveEIMS3.Site.Service.Base;");
+                sb2.AppendLine("using System.Data;");
+                sb2.AppendLine("using ShoveEIMS3.Site.Business;");
+                sb2.AppendLine("using Shove.DatabaseFactory;");
+                sb2.AppendLine("");
+                sb2.AppendLine("namespace ShoveEIMS3.Site.Service");
+                sb2.AppendLine("{");
+                sb2.AppendLine("    public class #类名#Collection : DBFactory, ShoveEIMS3.Site.Service.Base.ICollection<#类名#>");
+                sb2.AppendLine("    {");
+                sb2.AppendLine("        #region 构造函数");
+                sb2.AppendLine("");
+                sb2.AppendLine("        /// <summary>");
+                sb2.AppendLine("        /// 构造函数");
+                sb2.AppendLine("        /// </summary>");
+                sb2.AppendLine("        protected #类名#Collection()");
+                sb2.AppendLine("        {");
+                sb2.AppendLine("");
+                sb2.AppendLine("        }");
+                sb2.AppendLine("");
+                sb2.AppendLine("        public static #类名#Collection Create()");
+                sb2.AppendLine("        {");
+                sb2.AppendLine("            return new #类名#Collection();");
+                sb2.AppendLine("        }");
+                sb2.AppendLine("        #endregion");
+                sb2.AppendLine("");
+                sb2.AppendLine("        public #类名# Add(#类名# t, out string erMsg)");
+                sb2.AppendLine("        {");
+                sb2.AppendLine("           ");
+                sb2.AppendLine("            erMsg = string.Empty;");
+                sb2.AppendLine("");
+                sb2.AppendLine("            if (!t.VerifyAdd(out erMsg))");
+                sb2.AppendLine("            {");
+                sb2.AppendLine("                return null;");
+                sb2.AppendLine("            }");
+                sb2.AppendLine("");
+                sb2.AppendLine("            Factory.FieldCollect fields = new Factory.FieldCollect(#startLoop \"字段名\",#endLoop);");
+                sb2.AppendLine("");
+                sb2.AppendLine("            Factory.FieldValueCollect values = new Factory.FieldValueCollect(#startLoop t.字段名,#endLoop");
+                sb2.AppendLine("                );");
+                sb2.AppendLine("");
+                sb2.AppendLine("            long id = -1;");
+                sb2.AppendLine("");
+                sb2.AppendLine("            if (!OpenFactory(false))");
+                sb2.AppendLine("            {");
+                sb2.AppendLine("                erMsg = SitePublicFunction.BuildReturnMsg(00001);   //异常错误");
+                sb2.AppendLine("");
+                sb2.AppendLine("                return null;");
+                sb2.AppendLine("            }");
+                sb2.AppendLine("");
+                sb2.AppendLine("            try");
+                sb2.AppendLine("            {");
+                sb2.AppendLine("                id = Factory.Insert(#表名#, fields, values);");
+                sb2.AppendLine("            }");
+                sb2.AppendLine("            catch (Exception ex)");
+                sb2.AppendLine("            {");
+                sb2.AppendLine("                CloseFactory(true);");
+                sb2.AppendLine("");
+                sb2.AppendLine("                erMsg = string.Empty;");
+                sb2.AppendLine("                SitePublicFunction.RecordError(ex);");
+                sb2.AppendLine("");
+                sb2.AppendLine("                return null;");
+                sb2.AppendLine("            }");
+                sb2.AppendLine("");
+                sb2.AppendLine("            t = #类名#.Create(id);");
+                sb2.AppendLine("");
+                sb2.AppendLine("            if (id < 1)");
+                sb2.AppendLine("            {");
+                sb2.AppendLine("                CloseFactory(true);");
+                sb2.AppendLine("                return null;");
+                sb2.AppendLine("            }");
+                sb2.AppendLine("");
+                sb2.AppendLine("            CloseFactory(false);");
+                sb2.AppendLine("");
+                sb2.AppendLine("            return t;");
+                sb2.AppendLine("        }");
+                sb2.AppendLine("");
+                sb2.AppendLine("        public List<#类名#> ChildrensByObject(string condition, string order, int beginIndex, int pageSize, out string erMsg)");
+                sb2.AppendLine("        {");
+                sb2.AppendLine("            erMsg = string.Empty;");
+                sb2.AppendLine("");
+                sb2.AppendLine("            DataTable dt = null;");
+                sb2.AppendLine("");
+                sb2.AppendLine("            if (!OpenFactory(false))");
+                sb2.AppendLine("            {");
+                sb2.AppendLine("                erMsg = SitePublicFunction.BuildReturnMsg(00001);   //异常错误");
+                sb2.AppendLine("");
+                sb2.AppendLine("                return new List<#类名#>();");
+                sb2.AppendLine("            }");
+                sb2.AppendLine("");
+                sb2.AppendLine("            try");
+                sb2.AppendLine("            {");
+                sb2.AppendLine("                dt = Factory.Open(#类名#.TableName, new Factory.FieldCollect(\"Id\"), condition, string.Empty, beginIndex, pageSize);");
+                sb2.AppendLine("            }");
+                sb2.AppendLine("            catch (Exception ex)");
+                sb2.AppendLine("            {");
+                sb2.AppendLine("                CloseFactory(true);");
+                sb2.AppendLine("");
+                sb2.AppendLine("                erMsg = ex.Message;");
+                sb2.AppendLine("                SitePublicFunction.RecordError(ex);");
+                sb2.AppendLine("");
+                sb2.AppendLine("                return new List<#类名#>();");
+                sb2.AppendLine("            }");
+                sb2.AppendLine("");
+                sb2.AppendLine("            CloseFactory(false);");
+                sb2.AppendLine("");
+                sb2.AppendLine("            if (dt == null)");
+                sb2.AppendLine("            {");
+                sb2.AppendLine("                return new List<#类名#>();");
+                sb2.AppendLine("            }");
+                sb2.AppendLine("");
+                sb2.AppendLine("            int index = 0;");
+                sb2.AppendLine("            long[] ids = new long[dt.Rows.Count];");
+                sb2.AppendLine("");
+                sb2.AppendLine("            foreach (DataRow dr in dt.Rows)");
+                sb2.AppendLine("            {");
+                sb2.AppendLine("                ids[index++] = Shove._Convert.StrToLong(dr[\"Id\"].ToString(), 0);");
+                sb2.AppendLine("            }");
+                sb2.AppendLine("");
+                sb2.AppendLine("            dt.Dispose();");
+                sb2.AppendLine("");
+                sb2.AppendLine("            return #类名#.Create(ids);");
+                sb2.AppendLine("        }");
+                sb2.AppendLine("");
+                sb2.AppendLine("        /// <summary> 清除");
+                sb2.AppendLine("        /// </summary>");
+                sb2.AppendLine("        /// <param name=\"erMsg\">返回错误信息</param>");
+                sb2.AppendLine("        public bool Clear(out string erMsg)");
+                sb2.AppendLine("        {");
+                sb2.AppendLine("            erMsg = string.Empty;");
+                sb2.AppendLine("");
+                sb2.AppendLine("            return Remove(string.Empty, out erMsg);");
+                sb2.AppendLine("        }");
+                sb2.AppendLine("");
+                sb2.AppendLine("        /// <summary> 删除");
+                sb2.AppendLine("        /// </summary>");
+                sb2.AppendLine("        /// <param name=\"obj\">删除的对象</param>");
+                sb2.AppendLine("        /// <param name=\"erMsg\">返回错误信息</param>");
+                sb2.AppendLine("        public bool Remove(#类名# obj, out string erMsg)");
+                sb2.AppendLine("        {");
+                sb2.AppendLine("            erMsg = string.Empty;");
+                sb2.AppendLine("");
+                sb2.AppendLine("            return Remove(\"Id=\" + obj.ID, out erMsg);");
+                sb2.AppendLine("        }");
+                sb2.AppendLine("");
+                sb2.AppendLine("        /// <summary> 批量删除");
+                sb2.AppendLine("        /// </summary>");
+                sb2.AppendLine("        /// <param name=\"condition\">条件</param>");
+                sb2.AppendLine("        /// <param name=\"erMsg\">返回错误信息</param>");
+                sb2.AppendLine("        public bool Remove(string condition, out string erMsg)");
+                sb2.AppendLine("        {");
+                sb2.AppendLine("            erMsg = string.Empty;");
+                sb2.AppendLine("");
+                sb2.AppendLine("            List<Favorite> list = ChildrensByObject(condition, string.Empty, 0, 0, out erMsg);");
+                sb2.AppendLine("            if (list.Count == 0)");
+                sb2.AppendLine("            {");
+                sb2.AppendLine("                return true;");
+                sb2.AppendLine("            }");
+                sb2.AppendLine("");
+                sb2.AppendLine("            if (!OpenFactory(false))");
+                sb2.AppendLine("            {");
+                sb2.AppendLine("                erMsg = SitePublicFunction.BuildReturnMsg(00001);   //异常错误");
+                sb2.AppendLine("");
+                sb2.AppendLine("                return false;");
+                sb2.AppendLine("            }");
+                sb2.AppendLine("");
+                sb2.AppendLine("            try");
+                sb2.AppendLine("            {");
+                sb2.AppendLine("                Factory.Delete(\"#表名#\", condition);");
+                sb2.AppendLine("            }");
+                sb2.AppendLine("            catch (Exception ex)");
+                sb2.AppendLine("            {");
+                sb2.AppendLine("                CloseFactory(true);");
+                sb2.AppendLine("");
+                sb2.AppendLine("                erMsg = ex.Message;");
+                sb2.AppendLine("                SitePublicFunction.RecordError(ex);");
+                sb2.AppendLine("");
+                sb2.AppendLine("                return false;");
+                sb2.AppendLine("            }");
+                sb2.AppendLine("");
+                sb2.AppendLine("            CloseFactory(false);");
+                sb2.AppendLine("");
+                sb2.AppendLine("            return true;");
+                sb2.AppendLine("        }");
+                sb2.AppendLine("");
+                sb2.AppendLine("        /// <summary>总行数");
+                sb2.AppendLine("        /// </summary>");
+                sb2.AppendLine("        /// <param name=\"condition\">条件</param>");
+                sb2.AppendLine("        /// <returns></returns>");
+                sb2.AppendLine("        public int Count(string condition)");
+                sb2.AppendLine("        {");
+                sb2.AppendLine("            DataTable dt = null;");
+                sb2.AppendLine("");
+                sb2.AppendLine("            if (!OpenFactory(false))");
+                sb2.AppendLine("            {");
+                sb2.AppendLine("                return 0;");
+                sb2.AppendLine("            }");
+                sb2.AppendLine("");
+                sb2.AppendLine("            try");
+                sb2.AppendLine("            {");
+                sb2.AppendLine("                dt = Factory.Open(\"#表名#\", new Factory.FieldCollect(\"count(1)\"), condition, string.Empty, 0, 0);");
+                sb2.AppendLine("            }");
+                sb2.AppendLine("            catch (Exception ex)");
+                sb2.AppendLine("            {");
+                sb2.AppendLine("                CloseFactory(true);");
+                sb2.AppendLine("");
+                sb2.AppendLine("                SitePublicFunction.RecordError(ex);");
+                sb2.AppendLine("                return 0;");
+                sb2.AppendLine("            }");
+                sb2.AppendLine("");
+                sb2.AppendLine("            if (dt.Rows == null || dt.Rows.Count <= 0)");
+                sb2.AppendLine("            {");
+                sb2.AppendLine("                dt.Dispose();");
+                sb2.AppendLine("                CloseFactory(false);");
+                sb2.AppendLine("                return 0;");
+                sb2.AppendLine("            }");
+                sb2.AppendLine("");
+                sb2.AppendLine("            CloseFactory(false);");
+                sb2.AppendLine("");
+                sb2.AppendLine("            return Shove._Convert.StrToInt(dt.Rows[0][0].ToString(), 0);");
+                sb2.AppendLine("        }");
+                sb2.AppendLine("");
+                sb2.AppendLine("        /// <summary>总行数(后台专用)");
+                sb2.AppendLine("        /// </summary>");
+                sb2.AppendLine("        /// <param name=\"condition\">条件</param>");
+                sb2.AppendLine("        /// <returns></returns>");
+                sb2.AppendLine("        public int BCount(string condition)");
+                sb2.AppendLine("        {");
+                sb2.AppendLine("            return Count(condition);");
+                sb2.AppendLine("        }");
+                sb2.AppendLine("    }");
+                sb2.AppendLine("}");
+                sb2.AppendLine("");
+
+                #endregion
+
                 if (dic.Count==0)
                 {
-                    dic.Add("Add", "model.字段名 = txt字段名.Text;//字段说明");
-                    dic.Add("Edit", "txt字段名.Text= model.字段名;//字段说明");
-                    dic.Add("asp:TextBox", "<asp:TextBox id=\"txt字段名\" runat=\"server\" />");
-                    dic.Add("HtmlInput", "<input type=\"text\" id=\"txt字段名\" name=\"txt字段名\" />");
-                    dic.Add("EasyUIColumns", "{ field:'字段名',title:'字段说明',width:100 },"); 
+                    dic.Add("Add", "#startLoop model.字段名 = txt字段名.Text;//字段说明 #endLoop");
+                    dic.Add("Edit", "#startLoop txt字段名.Text= model.字段名;//字段说明 #endLoop");
+                    dic.Add("asp:TextBox", "#startLoop <asp:TextBox id=\"txt字段名\" runat=\"server\" /> #endLoop");
+                    dic.Add("HtmlInput", "#startLoop <input type=\"text\" id=\"txt字段名\" name=\"txt字段名\" /> #endLoop");
+                    dic.Add("EasyUIColumns", "#startLoop { field:'字段名',title:'字段说明',width:100 }, #endLoop");
+                    dic.Add("类", sb.ToString());
+                    dic.Add("集合", sb2.ToString());
                 }
                 int i = 0;
                 foreach (var dicItem in dic)
@@ -1005,7 +1422,6 @@ namespace CSharp数据库代码生成工具
                     listViewTemplate.Items.Add(item);
                 }
 
-                labSelectTableName.Text = StrTableName;
             }else if (tabControl1.SelectedIndex == 2)
             {
                 if (string.IsNullOrEmpty(StrDatabase))
@@ -1014,7 +1430,11 @@ namespace CSharp数据库代码生成工具
                     return;
                 }
             }
+
+            labSelectTableName.Text = StrTableName;
         }
+
+        DataTable CurrentDataTale = null;
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -1023,6 +1443,13 @@ namespace CSharp数据库代码生成工具
                 MessageBox.Show("请选择要操作的表");
                 return;
             }
+
+            string className = Regex.Replace(StrTableName, "f8_", string.Empty, RegexOptions.IgnoreCase);
+            className= Regex.Replace(className, "t", string.Empty, RegexOptions.IgnoreCase);
+            className = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(className);
+
+            StrTableName = System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(StrTableName);
+
             var sql = new StringBuilder();
 
             sql.AppendLine("select c.name as columnName,t.name as columnType,p.value as columnDescription   from  sysobjects o left join syscolumns c  on o.id=c.id");
@@ -1035,24 +1462,40 @@ namespace CSharp数据库代码生成工具
                 sql = new StringBuilder("select COLUMN_NAME,COLUMN_TYPE,COLUMN_COMMENT  from information_schema.COLUMNS where table_name = '" + StrTableName + "';");
             }
 
+            //#startLoop[\s\S]*?#endLoop
+
             var ds = GetDataSet(sql.ToString());
             if (ds!=null&&ds.Tables[0].Rows.Count>0)
             {
-                var result = new StringBuilder();
-                foreach (DataRow row in ds.Tables[0].Rows)
-                {
-                    var temp = richTemplate.Text;
-                    if (IsMySql)
-                    {
-                        result.AppendLine(temp.Replace("字段名", row["COLUMN_NAME"].ToString()).Replace("字段说明", row["COLUMN_COMMENT"].ToString()));
-                    }
-                    else
-                    {
-                        result.AppendLine(temp.Replace("字段名", row["columnName"].ToString()).Replace("字段说明", row["columnDescription"].ToString()));
-                    }
-                }
-                richResult.Text = result.ToString();
+                CurrentDataTale = ds.Tables[0];
+
+                var temp = richTemplate.Text;
+                temp = Regex.Replace(temp, "#类名#",className, RegexOptions.IgnoreCase);
+                temp = Regex.Replace(temp, "#表名#", StrTableName, RegexOptions.IgnoreCase);
+
+                richResult.Text = Regex.Replace(temp, @"#startLoop([\s\S]*?)#endLoop", GetLoopString, RegexOptions.IgnoreCase);
             }
+        }
+
+        /// <summary>循环字段
+        /// </summary>
+        /// <param name="match"></param>
+        /// <returns></returns>
+        private string GetLoopString(Match match) {
+            
+            var result = new StringBuilder();
+            foreach (DataRow row in CurrentDataTale.Rows)
+            {
+                if (IsMySql)
+                {
+                    result.AppendLine(match.Groups[1].Value.Replace("字段名", row["COLUMN_NAME"].ToString()).Replace("字段说明", row["COLUMN_COMMENT"].ToString()));
+                }
+                else
+                {
+                    result.AppendLine(match.Groups[1].Value.Replace("字段名", row["columnName"].ToString()).Replace("字段说明", row["columnDescription"].ToString()));
+                }
+            }
+            return result.ToString();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -1115,28 +1558,40 @@ namespace CSharp数据库代码生成工具
             ListViewHitTestInfo info = listViewTables.HitTest(e.X, e.Y);
             if (info.Item != null)
             {
-                if (int.Parse(info.Item.SubItems[3].Text)>0)
-                {
+                //if (int.Parse(info.Item.SubItems[3].Text)>0)
+                //{
                     StrTableName = info.Item.SubItems[1].Text;
                     //MessageBox.Show(StrTableName);
                     ShowDataForm table = new ShowDataForm();
                     table.Owner = this;
                     table.ShowDialog();
-                }
-                else
-                {
-                    MessageBox.Show("此表木有数据！");
-                }
+                //}
+                //else
+                //{
+                //    MessageBox.Show("此表木有数据！");
+                //}
             } 
         }
 
         private void btnConnection_Click(object sender, EventArgs e)
         {
-            if (comboBox1.SelectedItem.ToString()=="MySql")
+            
+               
+            if (comboBox1.SelectedItem ==null|| comboBox1.SelectedItem.ToString()=="MySql")
             {
-                IsMySql = true;
-                   _strConn = "server={0}; user id={1}; password={2}; database=information_schema; port={3}; charset=utf8;pooling=true;Max Pool Size=15;";
-                _strConn = string.Format(_strConn, txtServerUrl.Text.Trim(), txtUser.Text.Trim(), txtPwd.Text.Trim(), txt_Port.Text.Trim());
+                if (comboBox1.SelectedItem == null)
+                {
+                    IsMySql = true;
+                    _strConn = "server=pre-db.eims.com.cn; user id=Usr_0019823; password=jmJ7lT6H8; database=information_schema; port=3306;";
+                }
+                else
+                {
+                    IsMySql = true;
+                    _strConn = "server={0}; user id={1}; password={2}; database=information_schema; port={3}; charset=utf8;pooling=true;Max Pool Size=15;";
+                    _strConn = string.Format(_strConn, txtServerUrl.Text.Trim(), txtUser.Text.Trim(), txtPwd.Text.Trim(), txt_Port.Text.Trim());
+
+                }
+
 
                 //Shove.DatabaseFactory.MySQL manage = new Shove.DatabaseFactory.MySQL(_strConn);
                 _MySqlFactory = new Shove.DatabaseFactory.MySQL(_strConn);
@@ -1214,6 +1669,7 @@ namespace CSharp数据库代码生成工具
             //tabPage2.Parent = tabPage1.Parent = tabControl1;
 
             StrDatabase = comDataBase.Text;
+
              LoadData();
             tabControl1.SelectTab(1);
         }
