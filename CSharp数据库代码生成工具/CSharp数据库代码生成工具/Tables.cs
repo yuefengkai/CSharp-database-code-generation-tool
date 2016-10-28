@@ -1582,7 +1582,7 @@ namespace CSharp数据库代码生成工具
                 if (comboBox1.SelectedItem == null)
                 {
                     IsMySql = true;
-                    _strConn = "server=pre-db.eims.com.cn; user id=Usr_0019823; password=jmJ7lT6H8; database=information_schema; port=3306;";
+                    _strConn = ";";
                 }
                 else
                 {
