@@ -13,6 +13,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Bcpg.OpenPgp;
+using Dapper;
 
 namespace CSharp数据库代码生成工具
 {
@@ -25,9 +28,24 @@ namespace CSharp数据库代码生成工具
         private string _strConn = "";
         public string StrDatabase,StrTableName="";
 
-        static Shove.DatabaseFactory.MySQL _MySqlFactory = null;
-
         bool IsMySql = false;
+
+        private static MySqlConnection connection;
+        public static MySqlConnection MySqlConnection
+        {
+            get
+            {
+                return connection;
+            }
+        }
+
+        private MySqlConnection GetConnection(string  mysqlconnectionString) 
+        {
+            MySqlConnection con = new MySqlConnection(mysqlconnectionString);
+
+            return con;
+        }
+
 
         public Dictionary<string, string> dic = new Dictionary<string, string>();
         public string strTableName
@@ -883,7 +901,10 @@ namespace CSharp数据库代码生成工具
             {
                 if (IsMySql)
                 {
-                    DataTable dt = _MySqlFactory.ExecuteQuery("use `" + StrDatabase + "`;" + sql);
+                    DataTable dt = new DataTable();
+                    var read = connection.ExecuteReader("use `" + StrDatabase + "`;" + sql);
+                    dt.Load(read);
+
                     DataSet ds = new DataSet();
                     ds.Tables.Add(dt);
 
@@ -1589,12 +1610,10 @@ namespace CSharp数据库代码生成工具
                     IsMySql = true;
                     _strConn = "server={0}; user id={1}; password={2}; database=information_schema; port={3}; charset=utf8;pooling=true;Max Pool Size=15;";
                     _strConn = string.Format(_strConn, txtServerUrl.Text.Trim(), txtUser.Text.Trim(), txtPwd.Text.Trim(), txt_Port.Text.Trim());
-
+                    _strConn = $"server={ txtServerUrl.Text.Trim()};database=information_schema;uid={txtUser.Text.Trim()};pwd={txtPwd.Text.Trim()};charset='utf8';SslMode=None"; ;
                 }
 
-
-                //Shove.DatabaseFactory.MySQL manage = new Shove.DatabaseFactory.MySQL(_strConn);
-                _MySqlFactory = new Shove.DatabaseFactory.MySQL(_strConn);
+                connection = GetConnection(_strConn);
                 BindDatabase();
                 btnConnection.Enabled = false;
                 btnConfirm.Enabled = true;
@@ -1631,7 +1650,10 @@ namespace CSharp数据库代码生成工具
             DataSet ds;
             if (IsMySql)
             {
-                DataTable dt = _MySqlFactory.ExecuteQuery("show databases;");
+                DataTable dt = new DataTable();
+                var read = connection.ExecuteReader("show databases;");
+                dt.Load(read);
+               
                 ds = new DataSet();
                 ds.Tables.Add(dt);
 
